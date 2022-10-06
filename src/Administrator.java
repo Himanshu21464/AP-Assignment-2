@@ -1,21 +1,49 @@
-import javax.swing.*;
 import java.util.Scanner;
 import java.io.*;
 
 class Administrator {
 
-    /*String Admin1="Himanshu";
-       String Admin1_password="Adminpass1";
-       String Admin2="Rishabh";
-       String Admin2_password="Adminpass2";*/
-
     public static void Add_Category(){
+        System.out.print("Add Category ID: ");
+        Scanner sc=new Scanner(System.in);
+        int ID=sc.nextInt();
+
+        System.out.print("Add name of category: ");
+        String category=sc.nextLine();
+
 
     }
     public static void Delete_Category(){
+        System.out.println("Enter ID of category: ");
+        Scanner sc=new Scanner(System.in);
+        int ID=sc.nextInt();
+
+        if (ID ==1){
+
+            System.out.println("Category deleted successfully!!!");
+            Admin_Menu();
+        } else{
+            System.out.println("Wrong Input!!");
+            Delete_Category();
+        }
 
     }
     public static void Add_Product(){
+        System.out.println("Add category ID: ");
+        Scanner sc=new Scanner(System.in);
+        int id=sc.nextInt();
+        System.out.println("-------Add a Product---------");
+        System.out.print("Product name: ");
+        String name=sc.nextLine();
+        System.out.print("Product ID: ");
+        int temp_id=sc.nextInt();
+        System.out.println("Features: ");
+        String features=sc.nextLine();
+        System.out.print("Price: ");
+        int price=sc.nextInt();
+
+        Product product=new Product(name,temp_id,price,features);
+
 
     }
     public static void Delete_Product(){

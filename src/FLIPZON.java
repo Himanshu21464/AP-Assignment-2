@@ -22,7 +22,9 @@ public class FLIPZON {
 
         } else if (choice1==3) {
 
+
         } else if (choice1==4) {
+            Customer.Customer_Menu();
 
         } else if (choice1==5) {
             System.exit(0);
