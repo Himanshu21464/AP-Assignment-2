@@ -26,8 +26,6 @@ public class Customer {
         System.out.println("11. Add amount to Wallet");
         System.out.println("12. Back");
 
-
-
     }
     public static void Customer_Menu(){
         System.out.println("1. Sign up");

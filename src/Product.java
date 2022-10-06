@@ -10,5 +10,7 @@ class Product {
         this.Features=Features;
         this.price=Price;
     }
+    public static void deals(){
 
+    }
 }

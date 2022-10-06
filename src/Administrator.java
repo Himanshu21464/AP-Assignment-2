@@ -1,8 +1,5 @@
 import java.util.Scanner;
-import java.io.*;
-
 class Administrator {
-
     public static void Add_Category(){
         System.out.print("Add Category ID: ");
         Scanner sc=new Scanner(System.in);
@@ -19,7 +16,7 @@ class Administrator {
         int ID=sc.nextInt();
 
         if (ID ==1){
-
+            //code to delete category
             System.out.println("Category deleted successfully!!!");
             Admin_Menu();
         } else{
@@ -47,12 +44,66 @@ class Administrator {
 
     }
     public static void Delete_Product(){
+        System.out.println("Enter ID of category: ");
+        Scanner sc=new Scanner(System.in);
+        int ID=sc.nextInt();
 
+        if (ID ==1){
+            System.out.println("Enter Product ID");
+            double pid=sc.nextDouble();
+            if(pid==1) {
+                //code to delete product
+
+                System.out.println("Category deleted successfully!!!");
+                Admin_Menu();
+            }else {
+                System.out.println("Wrong Input!!!");
+                Delete_Product();
+            }
+        } else{
+            System.out.println("Wrong Input!!");
+            Delete_Product();
+        }
     }
     public static void Discount(){
-
+        System.out.print("Dear Admin give the Product ID you want to add discount for: ");
+        Scanner sc=new Scanner(System.in);
+        double id=sc.nextDouble();
+        if(id==1){
+            System.out.println("Enter discount for ELITE CUSTOMERS in % :");
+            int Elite_disc=sc.nextInt();
+            System.out.println("Enter discount for PRIME CUSTOMERS in % :");
+            int Prime_disc=sc.nextInt();
+            System.out.println("Enter discount for NORMAL CUSTOMERS in % :");
+            int Normal_disc=sc.nextInt();
+            Admin_Menu();
+        }else {
+            System.out.println("Wrong Input!!!");
+            Discount();
+        }
     }
     public static void Giveaway(){
+        System.out.print("Dear Admin give the Product IDs you want to combine and giveaway a deal for : ");
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter First Product ID: ");
+        double id1=sc.nextDouble();
+        if(id1==1) {
+            System.out.print("Enter Second Product ID: ");
+            double id2 = sc.nextDouble();
+            if(id2==1){
+                System.out.print("Enter the combined price in rupees(should be less then their combined price): ");
+                int price=sc.nextInt();
+                Admin_Menu();
+            }else {
+                System.out.println("Wrong Input!!!");
+                Giveaway();
+            }
+        }else{
+            System.out.println("Wrong Input!!!");
+            Giveaway();
+        }
+
+
 
     }
     public static void Admin_Menu(){
