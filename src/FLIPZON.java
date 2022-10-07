@@ -18,14 +18,13 @@ public class FLIPZON {
         if (choice1==1){
             Administrator.Credentials();
         } else if (choice1==2) {
-            //Product.Catalog();
-
+            while(1==1){
+                System.out.println(Product.product_list);
+            }
         } else if (choice1==3) {
-
-
+            Deals.deals();
         } else if (choice1==4) {
             Customer.Customer_Menu();
-
         } else if (choice1==5) {
             System.exit(0);
         }else {

@@ -16,7 +16,7 @@ class Administrator {
         int ID=sc.nextInt();
 
         if (ID ==1){
-            //code to delete category
+            int y=0;
             System.out.println("Category deleted successfully!!!");
             Admin_Menu();
         } else{
@@ -38,9 +38,8 @@ class Administrator {
         String features=sc.nextLine();
         System.out.print("Price: ");
         int price=sc.nextInt();
-
-        Product product=new Product(name,temp_id,price,features);
-
+        Product product=new Product(name,temp_id,price,features,id);
+        Product.product_list.add(product);
 
     }
     public static void Delete_Product(){
@@ -52,8 +51,8 @@ class Administrator {
             System.out.println("Enter Product ID");
             double pid=sc.nextDouble();
             if(pid==1) {
-                //code to delete product
-
+                int x=0;
+                Product.product_list.remove(x);
                 System.out.println("Category deleted successfully!!!");
                 Admin_Menu();
             }else {
@@ -92,7 +91,9 @@ class Administrator {
             double id2 = sc.nextDouble();
             if(id2==1){
                 System.out.print("Enter the combined price in rupees(should be less then their combined price): ");
-                int price=sc.nextInt();
+                double price=sc.nextInt();
+                Deals deals=new Deals(id1,id2,price);
+                Deals.deals_list.add(deals);
                 Admin_Menu();
             }else {
                 System.out.println("Wrong Input!!!");
