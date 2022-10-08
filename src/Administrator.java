@@ -1,67 +1,100 @@
 import java.util.Scanner;
+import java.lang.*;
 class Administrator {
+
+    static final String admin1="Himanshu";
+    static final String password1="12345";
+    static final String admin2="Rishabh";
+    static final String password2="67890";
+
     public static void Add_Category(){
         System.out.print("Add Category ID: ");
         Scanner sc=new Scanner(System.in);
         int ID=sc.nextInt();
-
+        sc.nextLine();
         System.out.print("Add name of category: ");
         String category=sc.nextLine();
-
+        System.out.println("Category Added Successfully");
+        Category category1=new Category();
+        Category.category_list.add(ID,category1);
+        Admin_Menu();
 
     }
     public static void Delete_Category(){
         System.out.println("Enter ID of category: ");
         Scanner sc=new Scanner(System.in);
         int ID=sc.nextInt();
-
-        if (ID ==1){
-            int y=0;
-            System.out.println("Category deleted successfully!!!");
-            Admin_Menu();
-        } else{
-            System.out.println("Wrong Input!!");
-            Delete_Category();
+        for (int i=0;i<Category.category_list.size();i++) {
+            if (Category.category_list.get(i).category==ID) {
+                Category.category_list.remove(i);
+                for (i=0;i<Product.product_list.size();i++){
+                    if((int)Product.product_list.get(i).ID==ID){
+                        Product.product_list.remove(i);
+                    }else{
+                        continue;
+                    }
+                }
+                System.out.println("Category deleted successfully!!!");
+                Admin_Menu();
+            }else {
+                System.out.println("Category not Found!!!");
+                Delete_Category();
+            }
         }
-
     }
     public static void Add_Product(){
         System.out.println("Add category ID: ");
         Scanner sc=new Scanner(System.in);
         int id=sc.nextInt();
-        System.out.println("-------Add a Product---------");
-        System.out.print("Product name: ");
-        String name=sc.nextLine();
-        System.out.print("Product ID: ");
-        int temp_id=sc.nextInt();
-        System.out.println("Features: ");
-        String features=sc.nextLine();
-        System.out.print("Price: ");
-        int price=sc.nextInt();
-        Product product=new Product(name,temp_id,price,features,id);
-        Product.product_list.add(product);
-
+        for(int i=0;i<Category.category_list.size();i++){
+            if(Category.category_list.get(i).category==id){
+                System.out.println("-------Add a Product---------");
+                System.out.print("Product name: ");
+                String name=sc.nextLine();
+                System.out.print("Product ID: ");
+                int temp_id=sc.nextInt();
+                sc.nextLine();
+                System.out.println("Features: ");
+                String features=sc.nextLine();
+                System.out.print("Price: ");
+                int price=sc.nextInt();
+                Product product=new Product(name,temp_id,price,features,id);
+                Product.product_list.add(product);
+                Admin_Menu();
+            }else{
+                System.out.println("Wrong category ID!!!");
+                Admin_Menu();
+            }
+        }
     }
     public static void Delete_Product(){
         System.out.println("Enter ID of category: ");
         Scanner sc=new Scanner(System.in);
         int ID=sc.nextInt();
-
-        if (ID ==1){
-            System.out.println("Enter Product ID");
-            double pid=sc.nextDouble();
-            if(pid==1) {
-                int x=0;
-                Product.product_list.remove(x);
-                System.out.println("Category deleted successfully!!!");
-                Admin_Menu();
+        int i=0;
+        for (i=0;i<Category.category_list.size();i++){
+            if(Category.category_list.get(i).category==ID){
+                System.out.println("Enter Product ID: ");
+                double id=sc.nextDouble();
+                int temp=(int) id;
+                if(temp==ID){
+                    for (int x=0;x<Product.product_list.size();x++){
+                        if(Product.product_list.get(x).ID==id){
+                            Product.product_list.remove(x);
+                            System.out.println("Product removed successfully!!!");
+                            Admin_Menu();
+                        }else{
+                            continue;
+                        }
+                    }
+                }else{
+                    System.out.println("Wrong Product ID!!!");
+                    Delete_Product();
+                }
             }else {
                 System.out.println("Wrong Input!!!");
-                Delete_Product();
+                Admin_Menu();
             }
-        } else{
-            System.out.println("Wrong Input!!");
-            Delete_Product();
         }
     }
     public static void Discount(){
@@ -142,21 +175,21 @@ class Administrator {
         System.out.println("Dear Admin");
         System.out.println("Please enter your Username and password");
         Scanner sc=new Scanner(System.in);
-        String username= sc.nextLine();
-        String password;
-
-        if (username=="Himanshu") {
-            password=sc.nextLine();
-            if (password=="Adminpass1"){
+        int username= sc.nextInt();
+        int password;
+        if (username==1) {
+            //int temp=sc.nextInt();
+            password=sc.nextInt();
+            if (password==123){
                 System.out.println("Welcome "+username+"!!!");
                 Admin_Menu();
             } else {
                 System.out.println("Wrong password!!");
                 Credentials();
             }
-        } else if (username=="Rishabh") {
-             password=sc.nextLine();
-            if (password=="Adminpass2"){
+        } else if (username==2) {
+             password=sc.nextInt();
+            if (password==456){
                 System.out.println("Welcome "+username+"!!!");
                 Admin_Menu();
             }else {

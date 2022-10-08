@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Customer {
     String customer_name;
     String customer_password;
     String Status;
+    int coupons;
     double Wallet;
-
     static ArrayList<Customer> customer_list=new ArrayList<Customer>();
     public Customer(String name, String password){
         this.customer_name=name;
@@ -61,15 +60,13 @@ public class Customer {
             System.out.println("Your Current status: "+Customer.customer_list.get(a).Status);
             System.out.print("Choose new Status:  ");
             String sts=sc.nextLine();
-            if(sts!=Customer.customer_list.get(a).Status){
+            if((sts!=Customer.customer_list.get(a).Status)&&(Customer.customer_list.get(0).Wallet>=300)){
                 Customer.customer_list.get(a).Status=sts;
                 System.out.println("status updated to "+sts);
             }else {
                 System.out.println("Wrong Input!!!");
                 Login_Menu();
             }
-
-
         } else if (choice4==11) {
             System.out.println("Enter amount in rupees you wish to add: ");
             double amount=sc.nextInt();
@@ -85,7 +82,6 @@ public class Customer {
         }
     }
     public static void Coupons(){
-
     }
     public static void Customer_Menu(){
         System.out.println("1. Sign up");
@@ -114,6 +110,7 @@ public class Customer {
         Customer customer=new Customer(name, password);
         Customer.customer_list.add(customer);
         System.out.println("Customer successfully registered!!!");
+        Customer_Menu();
     }
     public static void Login(){
         System.out.print("Enter Name: ");
@@ -122,9 +119,15 @@ public class Customer {
         System.out.print("Enter password: ");
         String password=sc.nextLine();
         int i=0;
-        while((Customer.customer_list.get(i).customer_name==name)&&(Customer.customer_list.get(i).customer_password==password )){
-            System.out.println("Welcome "+name+"!!!");
-            Login_Menu();
+        //while((Customer.customer_list.get(i).customer_name==name)&&(Customer.customer_list.get(i).customer_password==password )){
+        //
+        for (i=0;i<Customer.customer_list.size();i++){
+            if((Customer.customer_list.get(i).customer_name==name)&&(Customer.customer_list.get(i).customer_password==password)){
+                System.out.println("Welcome "+name+"!!!");
+                Login_Menu();
+            }else{
+             continue;
+            }
         }
         System.out.println("Wrong Credentials!!!");
         Login();
