@@ -4,9 +4,8 @@ import java.util.Scanner;
 class Category{
     int category;
     String category_name;
-
     boolean discount;
-    static ArrayList<Category> category_list=new ArrayList<Category>();
+    public static ArrayList<Category> category_list=new ArrayList<Category>();
     public Category(){}
     public Category(boolean discount){
         this.discount=true;
@@ -14,6 +13,7 @@ class Category{
     public Category(int category, String category_name){
         this.category=category;
         this.category_name=category_name;
+        this.discount=false;
     }
     public Category(int category){
         this.category=category;
@@ -21,12 +21,12 @@ class Category{
 }
 class Product extends Category {
     String name;
-    int ID;
+    double ID;
     int price;
     String Features;
     public Product(){}
     static ArrayList<Product> product_list=new ArrayList<Product>();
-    public Product(String Name, int ID, int Price,String Features,int category){
+    public Product(String Name, double ID, int Price,String Features,int category){
         super(category);
         this.name=Name;
         this.ID=ID;
@@ -82,18 +82,25 @@ class Cart extends Deals{
 
     }
     public static void View_Cart() {
-        for (int i=0;i<Cart.cart_list.size();i++){
+        if(Cart.cart_list.isEmpty()){
+            System.out.println("Cart is Empty!!");
+            Customer.Login_Menu();
+        }else {
             System.out.println(Cart.cart_list);
+            Customer.Login_Menu();
         }
-    Customer.Login_Menu();
     }
     public static void Empty_Cart(){
-        for (int i=0;i<Cart.cart_list.size();i++){
-            Cart.cart_list.remove(i);
+        if(Cart.cart_list.isEmpty()){
+            System.out.println("Cart is Already Empty!!");
+            Customer.Login_Menu();
+        }else {
+            for (int i=0;i<Cart.cart_list.size();i++) {
+                Cart.cart_list.remove(i);
+            }
+            System.out.println("Cart is empty now!!");
+            Customer.Login_Menu();
         }
-        System.out.println("Cart is Empty now!!!");
-        Customer.Login_Menu();
-
     }
     public static void Checkout(){
         int i=0;
