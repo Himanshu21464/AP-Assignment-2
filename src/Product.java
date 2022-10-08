@@ -5,8 +5,12 @@ class Category{
     int category;
     String category_name;
 
+    boolean discount;
     static ArrayList<Category> category_list=new ArrayList<Category>();
     public Category(){}
+    public Category(boolean discount){
+        this.discount=true;
+    }
     public Category(int category, String category_name){
         this.category=category;
         this.category_name=category_name;
@@ -109,14 +113,14 @@ class Cart extends Deals{
             System.out.println("Order placed. It will be delivered in 7-10 days.");
             Customer.Login_Menu();
         }else if(Customer.customer_list.get(0).Status=="ELITE"){
-            int discount=((Customer.customer_list.get(0).coupons + 10)*Cart.cart_list.get(i).Total_amount)/100;
+            int discount=((Customer.customer_list.get(0).coupons_discount + 10)*Cart.cart_list.get(i).Total_amount)/100;
             int Delivery_Charge=100+(Cart.cart_list.get(i).Total_amount)/50;
             int Total=Cart.cart_list.get(i).Total_amount+Delivery_Charge-discount;
             System.out.println("Total cost: "+Total);
             System.out.println("Order placed. It will be delivered in 2 days.");
             Customer.Login_Menu();
         }else if(Customer.customer_list.get(0).Status=="PRIME"){
-            int discount=((Customer.customer_list.get(0).coupons + 5)*Cart.cart_list.get(i).Total_amount)/100;
+            int discount=((Customer.customer_list.get(0).coupons_discount + 5)*Cart.cart_list.get(i).Total_amount)/100;
             int Delivery_Charge=100;
             int Total=Cart.cart_list.get(i).Total_amount+Delivery_Charge-discount;
             System.out.println("Total cost: "+Total);

@@ -5,6 +5,7 @@ public class Customer {
     String customer_password;
     String Status;
     int coupons;
+    int coupons_discount;
     double Wallet;
     static ArrayList<Customer> customer_list=new ArrayList<Customer>();
     public Customer(String name, String password){
@@ -12,6 +13,8 @@ public class Customer {
         this.customer_password=password;
         this.Status="NORMAL";
         this.Wallet=1000;
+        this.coupons=0;
+        this.coupons_discount=Administrator.discount_Normal;
     }
     public static void Login_Menu(){
         Scanner sc=new Scanner(System.in);
@@ -42,7 +45,8 @@ public class Customer {
         } else if (choice4==4) {
             Cart.Add_Deals_To_Cart();
         } else if (choice4==5) {
-            Coupons();
+            //Coupons();
+            System.out.println("Available coupons: "+Customer.customer_list.get(0).coupons+"@"+Customer.customer_list.get(0).coupons_discount+"%");
             Login_Menu();
         } else if (choice4==6) {
             System.out.println("Your Account balance is : Rs "+Customer.customer_list.get(0).Wallet);
@@ -60,9 +64,23 @@ public class Customer {
             System.out.println("Your Current status: "+Customer.customer_list.get(a).Status);
             System.out.print("Choose new Status:  ");
             String sts=sc.nextLine();
-            if((sts!=Customer.customer_list.get(a).Status)&&(Customer.customer_list.get(0).Wallet>=300)){
-                Customer.customer_list.get(a).Status=sts;
-                System.out.println("status updated to "+sts);
+            if((sts!=Customer.customer_list.get(a).Status)&&(Customer.customer_list.get(0).Wallet>=200)){
+                if(sts=="ELITE"&&(Customer.customer_list.get(0).Wallet>=300)) {
+                    Customer.customer_list.get(a).Status = sts;
+                    Customer.customer_list.get(a).Wallet-=300;
+                    Customer.customer_list.get(a).coupons_discount=Administrator.discount_Elite;
+                    Customer.customer_list.get(a).coupons+=4;
+                    System.out.println("status updated to " + sts);
+                } else if (sts=="PRIME"&&(Customer.customer_list.get(0).Wallet>=200)) {
+                    Customer.customer_list.get(a).Status = sts;
+                    Customer.customer_list.get(a).Wallet-=200;
+                    Customer.customer_list.get(a).coupons_discount=Administrator.discount_Prime;
+                    Customer.customer_list.get(a).coupons+=2;
+                    System.out.println("status updated to " + sts);
+                } else{
+                    System.out.println("Insufficient Balance or invalid Upgradable status!!!");
+                    Login_Menu();
+                }
             }else {
                 System.out.println("Wrong Input!!!");
                 Login_Menu();
@@ -80,8 +98,6 @@ public class Customer {
             System.out.println("Wrong Input!!!");
             Login_Menu();
         }
-    }
-    public static void Coupons(){
     }
     public static void Customer_Menu(){
         System.out.println("1. Sign up");
