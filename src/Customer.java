@@ -4,6 +4,7 @@ import java.util.Scanner;
 class Global {
     static String temp1;
     static String temp2;
+    static int index;
 
 }
 
@@ -94,6 +95,7 @@ public class Customer {
                 if (Customer.customer_list.get(a).customer_name.equals(indx1) && (Customer.customer_list.get(a).customer_password.equals(indx2))) {
                     ind = a;
                 }
+                Global.index=ind;
                 System.out.println("Your Current status: " + Customer.customer_list.get(ind).Status);
                 System.out.print("Choose new Status:  ");
                 String sts = sc.nextLine();
@@ -112,6 +114,8 @@ public class Customer {
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 300;
                                 Customer.customer_list.get(ind).Status = sts;
+                                Customer.customer_list.get(ind).coupons=4;
+                                Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
                                 System.out.println("Status updated successfully!!!");
                                 Login_Menu();
                             }
@@ -127,6 +131,8 @@ public class Customer {
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 300;
                                 Customer.customer_list.get(ind).Status = sts;
+                                Customer.customer_list.get(ind).coupons=4;
+                                Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
                                 System.out.println("Status updated successfully!!!");
                                 Login_Menu();
                             }
@@ -136,6 +142,8 @@ public class Customer {
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 200;
                                 Customer.customer_list.get(ind).Status = sts;
+                                Customer.customer_list.get(ind).coupons=2;
+                                Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Prime;
                                 System.out.println("Status updated successfully!!!");
                                 Login_Menu();
                             }
@@ -147,7 +155,7 @@ public class Customer {
         } else if (choice4 == 11) {
                 System.out.print("Enter amount in rupees you wish to add: ");
                 double amount = sc.nextInt();
-                int z = 0;
+                int z = Global.index;
                 Customer.customer_list.get(z).Wallet += amount;
                 System.out.println("Rs " + amount + "/- has been successfully added to your wallet!!!");
                 Login_Menu();

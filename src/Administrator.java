@@ -98,8 +98,6 @@ public class Administrator {
                             Product.product_list.remove(x);
                             System.out.println("Product removed successfully!!!");
                             Admin_Menu();
-                        }else{
-                            continue;
                         }
                     }
                 }else{
@@ -136,29 +134,41 @@ public class Administrator {
     }
     public static void Giveaway() {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
-        System.out.print("Dear Admin give the Product IDs you want to combine and giveaway a deal for : ");
-        //Scanner sc = new Scanner(System.in);
+        //sc.nextLine();
+        System.out.println("Dear Admin give the Product IDs you want to combine and giveaway a deal for ");
         System.out.print("Enter First Product ID: ");
         double id1 = sc.nextDouble();
-        for (int a = 0; a < Product.product_list.size(); a++) {
-            if (Product.product_list.get(a).ID == id1) {
-                System.out.print("Enter Second Product ID: ");
-                double id2 = sc.nextDouble();
-                for (int b = 0; a < Product.product_list.size(); b++) {
-                    if (Product.product_list.get(b).ID == id2) {
-                        System.out.print("Enter the combined price in rupees(should be less then their combined price): ");
-                        double price = sc.nextInt();
-                        Deals deals = new Deals(id1, id2, price);
-                        Deals.deals_list.add(deals);
-                        Admin_Menu();
-                    }else{
-                        System.out.println("Wrong Input!!!");
-                        Giveaway();
-                    }
-                }
+        int index1=-1,index2=-1;
+        for (int i=0;i<Product.product_list.size();i++){
+            if(id1==Product.product_list.get(i).ID){
+                index1=i;
             }
         }
+
+        if(index1>=0){
+            System.out.print("Enter Second Product ID: ");
+            double id2 = sc.nextDouble();
+            for (int j=0;j<Product.product_list.size();j++){
+                if(id1==Product.product_list.get(j).ID){
+                    index2=j;
+                }
+            }
+            if(index2>=0) {
+                System.out.print("Enter the giveaway price in rupees(should be less then their combined price): ");
+                double price = sc.nextInt();
+                Deals deals = new Deals(id1, id2, price);
+                Deals.deals_list.add(deals);
+                Admin_Menu();
+
+            }else{
+                System.out.println("Invalid Product ID!!");
+                Admin_Menu();
+            }
+        }else{
+            System.out.println("Invalid Product ID!!");
+            Admin_Menu();
+        }
+
     }
     public static void Admin_Menu(){
 
@@ -202,10 +212,10 @@ public class Administrator {
         if(username.equals("Himanshu")&&password.equals("12345")){
             System.out.println("Welcome Himanshu!!!");
             Admin_Menu();
-        } /*else if (username.equals("Rishabh")&&(password.equals("67890"))) {
+        } else if (username.equals("Rishabh")&&(password.equals("67890"))) {
             System.out.println("Welcome Rishabh!!!");
             Admin_Menu();
-        } */else {
+        } else {
             System.out.println("Wrong Username!!!");
             Credentials();
         }

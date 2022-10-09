@@ -50,12 +50,16 @@ class Deals extends Product{
 class Cart extends Deals{
     int quantity;
     double product_id;
-    int Total_amount;
+    static int Total_amount;
     static int list=0;
-    public Cart(double product_id, int quantity ){
+    public Cart(double product_id, int quantity,String name, double price,String details ){
         this.product_id=product_id;
         this.quantity=quantity;
         Cart.list+=quantity;
+        this.name=name;
+        this.price=price;
+        this.Features=details;
+        Cart.Total_amount+=price;
     }
     static ArrayList<Deals> deals=new ArrayList<Deals>();
     static ArrayList<Cart> cart_list=new ArrayList<Cart>();
@@ -67,7 +71,10 @@ class Cart extends Deals{
             if(id==Product.product_list.get(i).ID){
                 System.out.print("Enter quantity: ");
                 int qty=sc.nextInt();
-                Cart item=new Cart(id,qty);
+                String name=Product.product_list.get(i).name;
+                double price=Product.product_list.get(i).price;
+                String details=Product.product_list.get(i).Features;
+                Cart item=new Cart(id,qty,name,price,details);
                 cart_list.add(item);
             }else {
                 System.out.println("Wrong Input!!!");
@@ -96,7 +103,7 @@ class Cart extends Deals{
             Customer.Login_Menu();
         }else if(Cart.deals.isEmpty()&&(!Cart.cart_list.isEmpty())){
             for(int x=0;x<Product.product_list.size();x++){
-                System.out.println("Product ID: "+Cart.cart_list.get(x).ID);
+                System.out.println("Product ID: "+Cart.cart_list.get(x).product_id);
                 System.out.println("Product Name: "+Cart.cart_list.get(x).name);
                 System.out.println("Product Details: "+Cart.cart_list.get(x).Features);
                 System.out.println("Product Price: Rs "+Cart.cart_list.get(x).price+"/-");
@@ -104,16 +111,17 @@ class Cart extends Deals{
             Customer.Login_Menu();
         }else {
             for (int s=0;s<Cart.deals.size();s++){
-                System.out.println(Deals.deals_list.get(s).ID1);
-                System.out.println(Deals.deals_list.get(s).ID2);
-                System.out.println(Deals.deals_list.get(s).price);
+                System.out.println(Cart.deals.get(s).ID1);
+                System.out.println(Cart.deals.get(s).ID2);
+                System.out.println(Cart.deals.get(s).price);
             }
             for(int x=0;x<Product.product_list.size();x++){
-                System.out.println("Product ID: "+Product.product_list.get(x).ID);
-                System.out.println("Product Name: "+Product.product_list.get(x).name);
-                System.out.println("Product Details: "+Product.product_list.get(x).Features);
-                System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
+                System.out.println("Product ID: "+Cart.cart_list.get(x).product_id);
+                System.out.println("Product Name: "+Cart.cart_list.get(x).name);
+                System.out.println("Product Details: "+Cart.cart_list.get(x).Features);
+                System.out.println("Product Price: Rs "+Cart.cart_list.get(x).price+"/-");
             }
+            System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
             Customer.Login_Menu();
         }
     }
