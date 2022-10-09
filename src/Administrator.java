@@ -135,21 +135,6 @@ public class Administrator {
         }
     }
     public static void Giveaway() {
-        /*
-        System.out.print("Dear Admin give the Product IDs you want to combine and giveaway a deal for : ");
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter First Product ID: ");
-        double id1 = sc.nextDouble();
-        System.out.print("Enter Second Product ID: ");
-        double id2=sc.nextDouble();
-        for (int a = 0; a < Product.product_list.size(); a++){
-            if((Product.product_list.get(a).ID==id1)&&(id1!=id2)){
-
-                if ((Product.product_list.get(a).ID==id2))
-
-            }
-
-        }*/
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
         System.out.print("Dear Admin give the Product IDs you want to combine and giveaway a deal for : ");
@@ -173,7 +158,6 @@ public class Administrator {
                     }
                 }
             }
-
         }
     }
     public static void Admin_Menu(){
