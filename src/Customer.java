@@ -44,28 +44,28 @@ public class Customer {
         int choice4 = sc.nextInt();
         sc.nextLine();
         if (choice4 == 1) {
-            if (!Product.product_list.isEmpty()) {
-                for (int x=0;x<Product.product_list.size();x++){
+            if(Product.product_list.isEmpty()){
+                System.out.println("NO Products Available!!");
+                Login_Menu();
+            }else{
+                for(int x=0;x<Product.product_list.size();x++){
                     System.out.println("Product ID: "+Product.product_list.get(x).ID);
                     System.out.println("Product Name: "+Product.product_list.get(x).name);
                     System.out.println("Product Details: "+Product.product_list.get(x).Features);
                     System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
-                    Login_Menu();
                 }
-            } else {
-                System.out.println("No products available!!!");
                 Login_Menu();
             }
         } else if (choice4 == 2) {
-            if (!Deals.deals_list.isEmpty()) {
+            if(Deals.deals_list.isEmpty()){
+                System.out.println("NO Deals Available!!");
+                Login_Menu();
+            }else{
                 for(int x=0;x<Deals.deals_list.size();x++){
-                    System.out.println(Deals.deals_list.get(x).ID1);
-                    System.out.println(Deals.deals_list.get(x).ID2);
-                    System.out.println(Deals.deals_list.get(x).price);
-                    Login_Menu();
+                    System.out.println("ID of Ist product: "+Deals.deals_list.get(x).ID1);
+                    System.out.println("ID of 2nd product: "+Deals.deals_list.get(x).ID2);
+                    System.out.println("Giveaway Price: "+Deals.deals_list.get(x).price);
                 }
-            } else {
-                System.out.println("No Deals available right now!!");
                 Login_Menu();
             }
         } else if (choice4 == 3) {
@@ -73,7 +73,6 @@ public class Customer {
         } else if (choice4 == 4) {
             Cart.Add_Deals_To_Cart();
         } else if (choice4 == 5) {
-            //Coupons();
             System.out.println("Available coupons: " + Customer.customer_list.get(0).coupons + " coupons of " + Customer.customer_list.get(0).coupons_discount + " % discount(Coupons are not provided to NORMAL customers)");
             Login_Menu();
         } else if (choice4 == 6) {
@@ -84,7 +83,6 @@ public class Customer {
 
         } else if (choice4 == 8) {
             Cart.Empty_Cart();
-
         } else if (choice4 == 9) {
             Cart.Checkout();
         } else if (choice4 == 10) {
@@ -114,7 +112,7 @@ public class Customer {
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 300;
                                 Customer.customer_list.get(ind).Status = sts;
-                                Customer.customer_list.get(ind).coupons=4;
+                                //Customer.customer_list.get(ind).coupons=4;
                                 Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
                                 System.out.println("Status updated successfully!!!");
                                 Login_Menu();
@@ -131,7 +129,7 @@ public class Customer {
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 300;
                                 Customer.customer_list.get(ind).Status = sts;
-                                Customer.customer_list.get(ind).coupons=4;
+                                //Customer.customer_list.get(ind).coupons=4;
                                 Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
                                 System.out.println("Status updated successfully!!!");
                                 Login_Menu();
@@ -142,7 +140,7 @@ public class Customer {
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 200;
                                 Customer.customer_list.get(ind).Status = sts;
-                                Customer.customer_list.get(ind).coupons=2;
+                                //Customer.customer_list.get(ind).coupons=2;
                                 Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Prime;
                                 System.out.println("Status updated successfully!!!");
                                 Login_Menu();
@@ -160,7 +158,7 @@ public class Customer {
                 System.out.println("Rs " + amount + "/- has been successfully added to your wallet!!!");
                 Login_Menu();
             } else if (choice4 == 12) {
-                FLIPZON.Main_Menu();
+                Customer_Menu();
             } else {
                 System.out.println("Wrong Input!!!");
                 Login_Menu();

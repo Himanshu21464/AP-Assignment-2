@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.lang.*;
 public class Administrator {
-
     static int discount_Normal;
     static int discount_Elite;
     static int discount_Prime;
@@ -12,16 +11,17 @@ public class Administrator {
         sc.nextLine();
         System.out.print("Add name of category: ");
         String category = sc.nextLine();
-        int w=0;
+        int w=-1;
         for(int q=0;q<Category.category_list.size();q++){
             if(Category.category_list.get(q).category==ID){
-                w+=1;
+                w=q;
             }
         }
-        if(w==0) {
+        if(w==-1) {
             Category category1 = new Category(ID, category);
             Category.category_list.add(category1);
             System.out.println("Category Added Successfully");
+            System.out.println(Category.category_list.size());
             Admin_Menu();
         }else {
             System.out.println("Category Already Exist");
@@ -57,6 +57,7 @@ public class Administrator {
         Scanner sc=new Scanner(System.in);
         int id=sc.nextInt();
         sc.nextLine();
+        boolean flag=false;
         for(int i=0;i<Category.category_list.size();i++){
             if(Category.category_list.get(i).category==id){
                 System.out.println("-------Add a Product---------");
@@ -75,9 +76,18 @@ public class Administrator {
                 //sc.nextLine();
                 Product product=new Product(name,temp_id,price,features,id,quantity);
                 Product.product_list.add(product);
+                System.out.println("Product added successfully!!!");
+                flag=true;
                 Admin_Menu();
-            }else{
-                System.out.println("Wrong category ID!!!");
+            }
+        }
+        if(flag==false){
+            System.out.println("Category doesn't Exist!!!");
+            System.out.print("Press 1 for adding category and enter any other number to return to main menu: ");
+            int qw=sc.nextInt();
+            if (qw == 1) {
+                Add_Category();
+            } else {
                 Admin_Menu();
             }
         }
@@ -85,26 +95,30 @@ public class Administrator {
     public static void Delete_Product(){
         System.out.println("Enter ID of category: ");
         Scanner sc=new Scanner(System.in);
-        int ID=sc.nextInt();
-        int i=0;
-        for (i=0;i<Category.category_list.size();i++){
-            if(Category.category_list.get(i).category==ID){
+        int temp_ID=sc.nextInt();
+        boolean flag2=false;
+        boolean flag3=false;
+        for (int i=0;i<Category.category_list.size();i++){
+            if(Category.category_list.get(i).category==temp_ID){
+                flag2=true;
                 System.out.println("Enter Product ID: ");
                 double id=sc.nextDouble();
-                int temp=(int) id;
-                if(temp==ID){
                     for (int x=0;x<Product.product_list.size();x++){
                         if(Product.product_list.get(x).ID==id){
+                            flag3=true;
                             Product.product_list.remove(x);
                             System.out.println("Product removed successfully!!!");
                             Admin_Menu();
                         }
                     }
-                }else{
-                    System.out.println("Wrong Product ID!!!");
-                    Delete_Product();
+                    if(flag3==false){
+                        System.out.println("Wrong Product ID!!!");
+                        Delete_Product();
                 }
-            }else {
+            }
+        }
+        if(flag2==false){
+            {
                 System.out.println("Wrong Input!!!");
                 Admin_Menu();
             }
@@ -144,7 +158,6 @@ public class Administrator {
                 index1=i;
             }
         }
-
         if(index1>=0){
             System.out.print("Enter Second Product ID: ");
             double id2 = sc.nextDouble();
