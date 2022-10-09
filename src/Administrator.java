@@ -1,9 +1,14 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
 public class Administrator {
-    static int discount_Normal;
-    static int discount_Elite;
-    static int discount_Prime;
+    static float discount_Normal;
+    static float discount_Elite;
+    static float discount_Prime;
+    static ArrayList<Float> normal_list=new ArrayList<Float>();
+    static ArrayList<Float> elite_list=new ArrayList<Float>();
+    static ArrayList<Float> prime_list=new ArrayList<Float>();
+    static ArrayList<Double> list=new ArrayList<Double>();
     public static void Add_Category(){
         System.out.print("Add Category ID: ");
         Scanner sc=new Scanner(System.in);
@@ -125,26 +130,31 @@ public class Administrator {
         }
     }
     public static void Discount(){
+        System.out.println("----------------------------------------------------------");
         System.out.print("Dear Admin give the Product ID you want to add discount for: ");
         Scanner sc=new Scanner(System.in);
         double id=sc.nextDouble();
-        for(int s=0;s<Product.product_list.size();s++){
+        list.add(id);
+        /*for(int s=0;s<Product.product_list.size();s++){
             if(Product.product_list.get(s).ID==id){
                 Product.product_list.get(s).discount=true;
             }
-        }
-        if(id==1){
+        }*/
+
             System.out.println("Enter discount for ELITE CUSTOMERS in % :");
             discount_Elite=sc.nextInt();
+            elite_list.add(discount_Elite);
             System.out.println("Enter discount for PRIME CUSTOMERS in % :");
             discount_Prime=sc.nextInt();
+            prime_list.add(discount_Prime);
             System.out.println("Enter discount for NORMAL CUSTOMERS in % :");
             discount_Normal=sc.nextInt();
+            normal_list.add(discount_Normal);
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Admin_Menu();
-        }else {
-            System.out.println("Wrong Input!!!");
-            Discount();
-        }
+            //System.out.println("Wrong Input!!!");
+            //Discount();
     }
     public static void Giveaway() {
         Scanner sc = new Scanner(System.in);
@@ -171,20 +181,27 @@ public class Administrator {
                 double price = sc.nextInt();
                 Deals deals = new Deals(id1, id2, price);
                 Deals.deals_list.add(deals);
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
                 Admin_Menu();
 
             }else{
                 System.out.println("Invalid Product ID!!");
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
                 Admin_Menu();
             }
         }else{
             System.out.println("Invalid Product ID!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Admin_Menu();
         }
 
     }
     public static void Admin_Menu(){
 
+        System.out.println("----------------------------------------------");
         System.out.println("1. Add Category");
         System.out.println("2. Delete Category");
         System.out.println("3. Add Product");
@@ -192,6 +209,7 @@ public class Administrator {
         System.out.println("5. Set Discount on Product");
         System.out.println("6. Add giveaway deal");
         System.out.println("7. Back");
+        System.out.println("----------------------------------------------");
         Scanner sc=new Scanner(System.in);
         System.out.print("Enter your choice: ");
         int choice2=sc.nextInt();
@@ -211,6 +229,8 @@ public class Administrator {
             FLIPZON.Main_Menu();
         }else {
             System.out.println("Wrong Input!!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Admin_Menu();
         }
     }
@@ -230,6 +250,8 @@ public class Administrator {
             Admin_Menu();
         } else {
             System.out.println("Wrong Username!!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Credentials();
         }
     }

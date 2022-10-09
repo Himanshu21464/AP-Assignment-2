@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 class Category{
@@ -21,6 +23,7 @@ class Product extends Category {
     String Features;
     int quantity;
     boolean discount;
+    float disc;
     public Product(){}
     static ArrayList<Product> product_list=new ArrayList<Product>();
     public Product(String Name, double ID, int Price,String Features,int category,int quantity){
@@ -32,6 +35,7 @@ class Product extends Category {
         this.price=Price;
         this.quantity=quantity;
         this.discount=false;
+        this.disc=0;
     }
 }
 class Deals extends Product{
@@ -76,6 +80,8 @@ class Cart extends Deals{
                 Cart item=new Cart(id,qty,name,price,details);
                 cart_list.add(item);
                 System.out.println("Product added to Cart successfully!!!");
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
                 Customer.Login_Menu();
                 //Cart.Total_amount+=price;
             }
@@ -96,23 +102,33 @@ class Cart extends Deals{
             Cart.deals.add(Deals.deals_list.get(tempo - 1));
             Cart.Total_amount+=temp3;
             System.out.println("Deal Products successfully added to Cart!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer.Login_Menu();
         }else {
             System.out.println("Invalid Input!!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer.Login_Menu();
         }
     }
     public static void View_Cart() {
         if((Cart.cart_list.isEmpty())&&(Cart.deals.isEmpty())){
             System.out.println("Cart is Empty!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer.Login_Menu();
         }else if (Cart.cart_list.isEmpty()&&(!Cart.deals.isEmpty())){
             for (int s=0;s<Cart.deals.size();s++){
                 System.out.println("ID of Ist Product: "+Cart.deals.get(s).ID1);
                 System.out.println("ID of 2nd Product: "+Cart.deals.get(s).ID2);
                 System.out.println("Giveaway price: "+Cart.deals.get(s).price);
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
             }
             System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer.Login_Menu();
         }else if(Cart.deals.isEmpty()&&(!Cart.cart_list.isEmpty())){
             for(int x=0;x<Cart.cart_list.size();x++){
@@ -120,22 +136,32 @@ class Cart extends Deals{
                 System.out.println("Product Name: "+Cart.cart_list.get(x).name);
                 System.out.println("Product Details: "+Cart.cart_list.get(x).Features);
                 System.out.println("Product Price: Rs "+Cart.cart_list.get(x).price+"/-");
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
             }
             System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer.Login_Menu();
         }else {
             for (int u=0;u<Cart.deals.size();u++){
                 System.out.println("ID of Ist Product: "+Cart.deals.get(u).ID1);
                 System.out.println("ID of 2nd Product: "+Cart.deals.get(u).ID2);
                 System.out.println("Giveaway price: "+Cart.deals.get(u).price);
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
             }
             for(int v=0;v<Cart.cart_list.size();v++){
                 System.out.println("Product ID: "+Cart.cart_list.get(v).product_id);
                 System.out.println("Product Name: "+Cart.cart_list.get(v).name);
                 System.out.println("Product Details: "+Cart.cart_list.get(v).Features);
                 System.out.println("Product Price: Rs "+Cart.cart_list.get(v).price+"/-");
+                System.out.println("----------------------------------------------");
+                System.out.println(" ");
             }
             System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer.Login_Menu();
         }
     }
@@ -167,8 +193,57 @@ class Cart extends Deals{
             Customer.Login_Menu();
         }
     }
+
     public static void Checkout(){
         int i=0;
+        Random random=new Random();
+        if(Customer.customer_list.get(Global.index).Status.equals("PRIME")){
+            if(!Administrator.list.isEmpty()){
+                for(int f=0;f<Administrator.list.size();f++){
+                    for (int x=0;x<Cart.cart_list.size();x++){
+                        if(Cart.cart_list.get(x).ID==Administrator.list.get(f)){
+                            Cart.cart_list.get(x).disc=Administrator.prime_list.get(f);
+                        }else {
+                            Cart.cart_list.get(x).disc=5;
+                        }
+                    }
+                }
+            }
+        }else if(Customer.customer_list.get(Global.index).Status.equals("ELITE")){
+            if(!Administrator.list.isEmpty()){
+                for(int f=0;f<Administrator.list.size();f++){
+                    for (int x=0;x<Cart.cart_list.size();x++){
+                        if(Cart.cart_list.get(x).ID==Administrator.list.get(f)){
+                            Cart.cart_list.get(x).disc=Administrator.elite_list.get(f);
+                        }else {
+                            Cart.cart_list.get(x).disc=5;
+                        }
+                    }
+                }
+            }
+        }else if(Customer.customer_list.get(Global.index).Status.equals("NORMAL")){
+            if(!Administrator.list.isEmpty()){
+                for(int f=0;f<Administrator.list.size();f++){
+                    for (int x=0;x<Cart.cart_list.size();x++){
+                        if(Cart.cart_list.get(x).ID==Administrator.list.get(f)){
+                            Cart.cart_list.get(x).disc=Administrator.normal_list.get(f);
+                        }
+                    }
+                }
+            }
+        }
+
+        float MAX;
+        if(Customer.customer_list.get(Global.index).Status.equals("PRIME")){
+            //if(Customer.customer_list.get(Global.index)){
+            //
+           // }
+
+        }else{
+
+        }
+
+        /*
         System.out.println("Proceeding to checkout, Details: ");
         for(i=0;i<Cart.cart_list.size();i++){
             System.out.println(Cart.cart_list.get(i).name);
@@ -201,6 +276,6 @@ class Cart extends Deals{
         }else {
             System.out.println("Error!!");
             Checkout();
-        }
+        }*/
     }
 }

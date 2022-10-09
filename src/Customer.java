@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 class Global {
@@ -13,7 +14,7 @@ public class Customer {
     String customer_password;
     String Status;
     int coupons;
-    int coupons_discount;
+    public static ArrayList<Integer> disc_list=new ArrayList<Integer>();
     double Wallet;
     static ArrayList<Customer> customer_list = new ArrayList<Customer>();
 
@@ -23,11 +24,17 @@ public class Customer {
         this.Status = "NORMAL";
         this.Wallet = 1000;
         this.coupons = 0;
-        this.coupons_discount = Administrator.discount_Normal;
+        //this.coupons_discount = Administrator.discount_Normal;
+    }
+    public static float utility(){
+        Collections.sort(disc_list);
+        float max=disc_list.get(disc_list.size()-1);
+        return max;
     }
 
     public static void Login_Menu() {
         Scanner sc = new Scanner(System.in);
+        System.out.println("------------------------------------------------------------------");
         System.out.println(" 1. Browse Products");
         System.out.println(" 2. Browse Deals");
         System.out.println(" 3. Add a product to cart");
@@ -40,12 +47,14 @@ public class Customer {
         System.out.println("10. Upgrade customer Status");
         System.out.println("11. Add amount to Wallet");
         System.out.println("12. Back");
+        System.out.println("-------------------------------------------------------------------");
         System.out.print("Enter your choice: ");
         int choice4 = sc.nextInt();
         sc.nextLine();
         if (choice4 == 1) {
             if(Product.product_list.isEmpty()){
-                System.out.println("NO Products Available!!");
+                System.out.println("------------------NO Products Available!!-----------------------");
+                System.out.println(" ");
                 Login_Menu();
             }else{
                 for(int x=0;x<Product.product_list.size();x++){
@@ -53,18 +62,23 @@ public class Customer {
                     System.out.println("Product Name: "+Product.product_list.get(x).name);
                     System.out.println("Product Details: "+Product.product_list.get(x).Features);
                     System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
+                    System.out.println("-------------------------------------------------------------------");
+                    System.out.println(" ");
                 }
                 Login_Menu();
             }
         } else if (choice4 == 2) {
             if(Deals.deals_list.isEmpty()){
-                System.out.println("NO Deals Available!!");
+                System.out.println("---------------------NO Deals Available!!----------------------------");
+                System.out.println(" ");
                 Login_Menu();
             }else{
                 for(int x=0;x<Deals.deals_list.size();x++){
                     System.out.println("ID of Ist product: "+Deals.deals_list.get(x).ID1);
                     System.out.println("ID of 2nd product: "+Deals.deals_list.get(x).ID2);
                     System.out.println("Giveaway Price: "+Deals.deals_list.get(x).price);
+                    System.out.println("-------------------------------------------------------------------");
+                    System.out.println(" ");
                 }
                 Login_Menu();
             }
@@ -73,10 +87,11 @@ public class Customer {
         } else if (choice4 == 4) {
             Cart.Add_Deals_To_Cart();
         } else if (choice4 == 5) {
-            System.out.println("Available coupons: " + Customer.customer_list.get(0).coupons + " coupons of " + Customer.customer_list.get(0).coupons_discount + " % discount(Coupons are not provided to NORMAL customers)");
+            System.out.println("Available coupons: " );
+            //for(int h=0;h<l)
             Login_Menu();
         } else if (choice4 == 6) {
-            System.out.println("Your Account balance is : Rs " + Customer.customer_list.get(0).Wallet);
+            System.out.println("Your Account balance is : Rs " + Customer.customer_list.get(Global.index).Wallet);
             Login_Menu();
         } else if (choice4 == 7) {
             Cart.View_Cart();
@@ -94,55 +109,70 @@ public class Customer {
                     ind = a;
                 }
                 Global.index=ind;
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
                 System.out.println("Your Current status: " + Customer.customer_list.get(ind).Status);
                 System.out.print("Choose new Status:  ");
                 String sts = sc.nextLine();
                 if (sts.equals(Customer.customer_list.get(ind).Status)) {
                     System.out.println("Current and New status can't be same!!!");
+                    System.out.println(" ");
                     Login_Menu();
                 } else {
                     if (Customer.customer_list.get(ind).Status.equals("PRIME")) {
                         if (sts.equals("NORMAL")) {
                             System.out.println("Your can't degrade your Status!!!");
+                            System.out.println(" ");
                             Login_Menu();
                         } else {
                             if (Customer.customer_list.get(ind).Wallet < 300) {
                                 System.out.println("Insufficient Balance!!!");
+                                System.out.println(" ");
                                 Login_Menu();
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 300;
                                 Customer.customer_list.get(ind).Status = sts;
                                 //Customer.customer_list.get(ind).coupons=4;
-                                Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
+                                //Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
                                 System.out.println("Status updated successfully!!!");
+                                System.out.println("----------------------------------------------");
+                                System.out.println(" ");
                                 Login_Menu();
                             }
                         }
                     } else if (Customer.customer_list.get(ind).Status.equals("ELITE")) {
                         System.out.println("Your current status is already maxed!!! ");
+                        System.out.println(" ");
                         Login_Menu();
                     } else if (Customer.customer_list.get(ind).Status.equals("NORMAL")) {
                         if (sts.equals("ELITE")) {
                             if (Customer.customer_list.get(ind).Wallet < 300) {
                                 System.out.println("Insufficient balance!!!");
+                                System.out.println("----------------------------------------------");
+                                System.out.println(" ");
                                 Login_Menu();
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 300;
                                 Customer.customer_list.get(ind).Status = sts;
                                 //Customer.customer_list.get(ind).coupons=4;
-                                Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
+                                //Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Elite;
                                 System.out.println("Status updated successfully!!!");
+                                System.out.println("----------------------------------------------");
+                                System.out.println(" ");
                                 Login_Menu();
                             }
                         } else if (sts.equals("PRIME")) {
                             if (Customer.customer_list.get(ind).Wallet < 200) {
                                 System.out.println("Insufficient Balance!!");
+                                System.out.println("----------------------------------------------");
+                                System.out.println(" ");
                             } else {
                                 Customer.customer_list.get(ind).Wallet -= 200;
                                 Customer.customer_list.get(ind).Status = sts;
                                 //Customer.customer_list.get(ind).coupons=2;
-                                Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Prime;
+                                //Customer.customer_list.get(ind).coupons_discount=Administrator.discount_Prime;
                                 System.out.println("Status updated successfully!!!");
+                                System.out.println("----------------------------------------------");
+                                System.out.println(" ");
                                 Login_Menu();
                             }
 
@@ -156,6 +186,8 @@ public class Customer {
                 int z = Global.index;
                 Customer.customer_list.get(z).Wallet += amount;
                 System.out.println("Rs " + amount + "/- has been successfully added to your wallet!!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
                 Login_Menu();
             } else if (choice4 == 12) {
                 Customer_Menu();
@@ -165,9 +197,11 @@ public class Customer {
             }
         }
     public static void Customer_Menu() {
+        System.out.println("----------------------------------------------");
         System.out.println("1. Sign up");
         System.out.println("2. Login");
         System.out.println("3. Back");
+        System.out.println("----------------------------------------------");
         System.out.print("Enter your choice: ");
         Scanner sc = new Scanner(System.in);
         int choice3 = sc.nextInt();
@@ -179,6 +213,8 @@ public class Customer {
             FLIPZON.Main_Menu();
         } else {
             System.out.println("Wrong Input!!!");
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
             Customer_Menu();
         }
     }
@@ -206,7 +242,7 @@ public class Customer {
         Global.temp2 = password;
         for (int i = 0; i < Customer.customer_list.size(); i++) {
             if ((name.equals((Customer.customer_list.get(i).customer_name))) && (password.equals(Customer.customer_list.get(i).customer_password))) {
-                System.out.println("Welcome " + name + "!!!");
+                System.out.println("-------------------------Welcome " + name + "!!!--------------");
                 Login_Menu();
             } else {
                 System.out.println("Wrong Credentials or User not registered!!! \nTry to register for user with these credentials by pressing 1 or Login again by pressing 2:  ");
