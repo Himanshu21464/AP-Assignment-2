@@ -80,7 +80,7 @@ class Cart extends Deals{
                 Cart item=new Cart(id,qty,name,price,details);
                 cart_list.add(item);
                 System.out.println("Product added to Cart successfully!!!");
-                System.out.println("----------------------------------------------");
+                System.out.println("--------------------------------------------------");
                 System.out.println(" ");
                 Customer.Login_Menu();
                 //Cart.Total_amount+=price;
@@ -102,12 +102,12 @@ class Cart extends Deals{
             Cart.deals.add(Deals.deals_list.get(tempo - 1));
             Cart.Total_amount+=temp3;
             System.out.println("Deal Products successfully added to Cart!!");
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
         }else {
             System.out.println("Invalid Input!!!");
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
         }
@@ -115,7 +115,7 @@ class Cart extends Deals{
     public static void View_Cart() {
         if((Cart.cart_list.isEmpty())&&(Cart.deals.isEmpty())){
             System.out.println("Cart is Empty!!");
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
         }else if (Cart.cart_list.isEmpty()&&(!Cart.deals.isEmpty())){
@@ -127,7 +127,7 @@ class Cart extends Deals{
                 System.out.println(" ");
             }
             System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
         }else if(Cart.deals.isEmpty()&&(!Cart.cart_list.isEmpty())){
@@ -140,7 +140,7 @@ class Cart extends Deals{
                 System.out.println(" ");
             }
             System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
         }else {
@@ -160,7 +160,7 @@ class Cart extends Deals{
                 System.out.println(" ");
             }
             System.out.println("Total amount of all items in cart: "+Cart.Total_amount);
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
         }
@@ -233,7 +233,7 @@ class Cart extends Deals{
             }
         }
 
-        float MAX;
+        float MAX=Customer.max_utility();
         if(Customer.customer_list.get(Global.index).Status.equals("PRIME")){
             //if(Customer.customer_list.get(Global.index)){
             //

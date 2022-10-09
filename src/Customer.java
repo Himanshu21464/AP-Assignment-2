@@ -26,7 +26,7 @@ public class Customer {
         this.coupons = 0;
         //this.coupons_discount = Administrator.discount_Normal;
     }
-    public static float utility(){
+    public static float max_utility(){
         Collections.sort(disc_list);
         float max=disc_list.get(disc_list.size()-1);
         return max;
@@ -109,7 +109,7 @@ public class Customer {
                     ind = a;
                 }
                 Global.index=ind;
-                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
+                System.out.println("---------------------------------------------------------- ");
                 System.out.println("Your Current status: " + Customer.customer_list.get(ind).Status);
                 System.out.print("Choose new Status:  ");
                 String sts = sc.nextLine();

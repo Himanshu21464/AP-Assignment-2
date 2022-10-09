@@ -34,7 +34,7 @@ public class Administrator {
         }
     }
     public static void Delete_Category() {
-        System.out.println("Enter ID of category: ");
+        System.out.print("Enter ID of category: ");
         Scanner sc = new Scanner(System.in);
         int ID = sc.nextInt();
         if (!Category.category_list.isEmpty()) {
@@ -98,7 +98,7 @@ public class Administrator {
         }
     }
     public static void Delete_Product(){
-        System.out.println("Enter ID of category: ");
+        System.out.print("Enter ID of category: ");
         Scanner sc=new Scanner(System.in);
         int temp_ID=sc.nextInt();
         boolean flag2=false;
@@ -106,7 +106,7 @@ public class Administrator {
         for (int i=0;i<Category.category_list.size();i++){
             if(Category.category_list.get(i).category==temp_ID){
                 flag2=true;
-                System.out.println("Enter Product ID: ");
+                System.out.print("Enter Product ID: ");
                 double id=sc.nextDouble();
                     for (int x=0;x<Product.product_list.size();x++){
                         if(Product.product_list.get(x).ID==id){
@@ -141,16 +141,16 @@ public class Administrator {
             }
         }*/
 
-            System.out.println("Enter discount for ELITE CUSTOMERS in % :");
+            System.out.print("Enter discount for ELITE CUSTOMERS in % :");
             discount_Elite=sc.nextInt();
             elite_list.add(discount_Elite);
-            System.out.println("Enter discount for PRIME CUSTOMERS in % :");
+            System.out.print("Enter discount for PRIME CUSTOMERS in % :");
             discount_Prime=sc.nextInt();
             prime_list.add(discount_Prime);
-            System.out.println("Enter discount for NORMAL CUSTOMERS in % :");
+            System.out.print("Enter discount for NORMAL CUSTOMERS in % :");
             discount_Normal=sc.nextInt();
             normal_list.add(discount_Normal);
-            System.out.println("----------------------------------------------");
+            System.out.print("-------------------------------------------------");
             System.out.println(" ");
             Admin_Menu();
             //System.out.println("Wrong Input!!!");
@@ -181,19 +181,19 @@ public class Administrator {
                 double price = sc.nextInt();
                 Deals deals = new Deals(id1, id2, price);
                 Deals.deals_list.add(deals);
-                System.out.println("----------------------------------------------");
+                System.out.println("--------------------------------------------------");
                 System.out.println(" ");
                 Admin_Menu();
 
             }else{
                 System.out.println("Invalid Product ID!!");
-                System.out.println("----------------------------------------------");
+                System.out.println("--------------------------------------------------");
                 System.out.println(" ");
                 Admin_Menu();
             }
         }else{
             System.out.println("Invalid Product ID!!");
-            System.out.println("----------------------------------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Admin_Menu();
         }
@@ -247,6 +247,7 @@ public class Administrator {
             Admin_Menu();
         } else if (username.equals("Rishabh")&&(password.equals("67890"))) {
             System.out.println("Welcome Rishabh!!!");
+            System.out.println("----------------------------------------------");
             Admin_Menu();
         } else {
             System.out.println("Wrong Username!!!");
