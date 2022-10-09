@@ -87,9 +87,16 @@ public class Customer {
         } else if (choice4 == 4) {
             Cart.Add_Deals_To_Cart();
         } else if (choice4 == 5) {
-            System.out.println("Available coupons: " );
-            //for(int h=0;h<l)
-            Login_Menu();
+            if(!disc_list.isEmpty()) {
+                System.out.println("Available coupons: ");
+                for (int h = 0; h < disc_list.size(); h++) {
+                    System.out.println("Discount % :" + disc_list.get(h));
+                }
+                Login_Menu();
+            }else{
+                System.out.println("No Coupons Available!!!");
+                Login_Menu();
+            }
         } else if (choice4 == 6) {
             System.out.println("Your Account balance is : Rs " + Customer.customer_list.get(Global.index).Wallet);
             Login_Menu();
