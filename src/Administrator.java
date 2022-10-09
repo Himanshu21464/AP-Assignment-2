@@ -5,11 +5,6 @@ public class Administrator {
     static int discount_Normal;
     static int discount_Elite;
     static int discount_Prime;
-
-    static final String admin1="Himanshu";
-    static final String password1="12345";
-    static final String admin2="Rishabh";
-    static final String password2="67890";
     public static void Add_Category(){
         System.out.print("Add Category ID: ");
         Scanner sc=new Scanner(System.in);
@@ -37,22 +32,28 @@ public class Administrator {
         System.out.println("Enter ID of category: ");
         Scanner sc = new Scanner(System.in);
         int ID = sc.nextInt();
-        int temp=0;
-        while(Category.category_list.get(temp+1).category!=ID){
-            temp+=1;
-        }
-        System.out.println(temp);
-        if(temp>=0){
+        if (!Category.category_list.isEmpty()) {
+            int temp = 0;
+            while (Category.category_list.get(temp).category != ID) {
+                temp += 1;
+            }
+        if(temp>=0) {
             Category.category_list.remove(temp);
+            for(int q=0;q<Product.product_list.size();q++){
+                if(ID==(Product.product_list.get(q).category)){
+                    Product.product_list.remove(q);
+                }
+            }
             System.out.println("Category removed successfully!!!");
             Admin_Menu();
+        }
         }else {
-            System.out.println("Category does not exist");
+            System.out.println("Category does not exist!!!");
             Admin_Menu();
         }
     }
     public static void Add_Product(){
-        System.out.println("Add category ID: ");
+        System.out.print("Add category ID: ");
         Scanner sc=new Scanner(System.in);
         int id=sc.nextInt();
         sc.nextLine();
@@ -64,11 +65,15 @@ public class Administrator {
                 System.out.print("Product ID: ");
                 double temp_id=sc.nextDouble();
                 sc.nextLine();
-                System.out.println("Features: ");
+                System.out.print("Features: ");
                 String features=sc.nextLine();
+                //sc.nextLine();
                 System.out.print("Price: ");
                 int price=sc.nextInt();
-                Product product=new Product(name,temp_id,price,features,id);
+                System.out.print("Enter quantity: ");
+                int quantity=sc.nextInt();
+                //sc.nextLine();
+                Product product=new Product(name,temp_id,price,features,id,quantity);
                 Product.product_list.add(product);
                 Admin_Menu();
             }else{
@@ -114,8 +119,6 @@ public class Administrator {
         for(int s=0;s<Product.product_list.size();s++){
             if(Product.product_list.get(s).ID==id){
                 Product.product_list.get(s).discount=true;
-            }else {
-                continue;
             }
         }
         if(id==1){
@@ -132,8 +135,25 @@ public class Administrator {
         }
     }
     public static void Giveaway() {
+        /*
         System.out.print("Dear Admin give the Product IDs you want to combine and giveaway a deal for : ");
         Scanner sc = new Scanner(System.in);
+        System.out.print("Enter First Product ID: ");
+        double id1 = sc.nextDouble();
+        System.out.print("Enter Second Product ID: ");
+        double id2=sc.nextDouble();
+        for (int a = 0; a < Product.product_list.size(); a++){
+            if((Product.product_list.get(a).ID==id1)&&(id1!=id2)){
+
+                if ((Product.product_list.get(a).ID==id2))
+
+            }
+
+        }*/
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+        System.out.print("Dear Admin give the Product IDs you want to combine and giveaway a deal for : ");
+        //Scanner sc = new Scanner(System.in);
         System.out.print("Enter First Product ID: ");
         double id1 = sc.nextDouble();
         for (int a = 0; a < Product.product_list.size(); a++) {
@@ -152,10 +172,8 @@ public class Administrator {
                         Giveaway();
                     }
                 }
-            }else {
-                System.out.println("Wrong Input!!!");
-                Giveaway();
             }
+
         }
     }
     public static void Admin_Menu(){
@@ -191,29 +209,19 @@ public class Administrator {
     }
     public static void Credentials(){
         System.out.println("Dear Admin");
-        System.out.println("Please enter your Username and password");
+        System.out.print("Please enter your Username: ");
         Scanner sc=new Scanner(System.in);
-        int username= sc.nextInt();
-        int password;
-        if (username==1) {
-            password=sc.nextInt();
-            if (password==12345){
-                System.out.println("Welcome Himanshu!!!");
-                Admin_Menu();
-            } else {
-                System.out.println("Wrong password!!");
-                Credentials();
-            }
-        } else if (username==2) {
-             password=sc.nextInt();
-            if (password==67890){
-                System.out.println("Welcome Rishabh!!!");
-                Admin_Menu();
-            }else {
-                System.out.println("Wrong password!!");
-                Credentials();
-            }
-        }else {
+        String username= sc.nextLine();
+        System.out.print("Please enter your Password: ");
+        String password=sc.nextLine();
+
+        if(username.equals("Himanshu")&&password.equals("12345")){
+            System.out.println("Welcome Himanshu!!!");
+            Admin_Menu();
+        } /*else if (username.equals("Rishabh")&&(password.equals("67890"))) {
+            System.out.println("Welcome Rishabh!!!");
+            Admin_Menu();
+        } */else {
             System.out.println("Wrong Username!!!");
             Credentials();
         }

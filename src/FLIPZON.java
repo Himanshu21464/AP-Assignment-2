@@ -17,8 +17,11 @@ public class FLIPZON {
                 System.out.println("NO Products Available!!");
                 Main_Menu();
             }else{
-                for(int x=0;x<Product.product_list.size();x++){
-                    System.out.println(Product.product_list);
+                 for(int x=0;x<Product.product_list.size();x++){
+                    System.out.println("Product ID: "+Product.product_list.get(x).ID);
+                    System.out.println("Product Name: "+Product.product_list.get(x).name);
+                    System.out.println("Product Details: "+Product.product_list.get(x).Features);
+                    System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
                     Main_Menu();
                 }
             }
@@ -28,7 +31,9 @@ public class FLIPZON {
                 Main_Menu();
             }else{
                 for(int x=0;x<Deals.deals_list.size();x++){
-                    System.out.println(Deals.deals_list);
+                    System.out.println(Deals.deals_list.get(x).ID1);
+                    System.out.println(Deals.deals_list.get(x).ID2);
+                    System.out.println(Deals.deals_list.get(x).price);
                     Main_Menu();
                 }
             }
