@@ -6,7 +6,7 @@ class Global {
     static String temp1;
     static String temp2;
     static int index;
-
+    static int cart_quantity;
 }
 
 public class Customer {
@@ -15,8 +15,16 @@ public class Customer {
     String Status;
     int coupons;
     public static ArrayList<Integer> disc_list=new ArrayList<Integer>();
-    double Wallet;
+    private double Wallet;
     static ArrayList<Customer> customer_list = new ArrayList<Customer>();
+
+    public double getWallet() {
+        return Wallet;
+    }
+
+    public void setWallet(double wallet) {
+        Wallet -= wallet;
+    }
 
     public Customer(String name, String password) {
         this.customer_name = name;
@@ -25,6 +33,23 @@ public class Customer {
         this.Wallet = 1000;
         this.coupons = 0;
         //this.coupons_discount = Administrator.discount_Normal;
+    }
+    public static void Product_Catalog(int parameter){
+        if(Product.product_list.isEmpty()){
+            System.out.println("------------------------NO Products Available!!-----------------------");
+            System.out.println(" ");
+            Login_Menu();
+        }else{
+            for(int x=0;x<Product.product_list.size();x++){
+                System.out.println("Product ID: "+Product.product_list.get(x).ID);
+                System.out.println("Product Name: "+Product.product_list.get(x).name);
+                System.out.println("Product Details: "+Product.product_list.get(x).Features);
+                System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
+                System.out.println("In Stock : "+Product.product_list.get(x).quantity);
+                System.out.println("------------------------------------------------------------------");
+                System.out.println(" ");
+            }
+        }
     }
     public static float max_utility(){
         Collections.sort(disc_list);
@@ -62,6 +87,7 @@ public class Customer {
                     System.out.println("Product Name: "+Product.product_list.get(x).name);
                     System.out.println("Product Details: "+Product.product_list.get(x).Features);
                     System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
+                    System.out.println("In Stock : "+Product.product_list.get(x).quantity);
                     System.out.println("-------------------------------------------------------------------");
                     System.out.println(" ");
                 }
@@ -98,7 +124,7 @@ public class Customer {
                 Login_Menu();
             }
         } else if (choice4 == 6) {
-            System.out.println("Your Account balance is : Rs " + Customer.customer_list.get(Global.index).Wallet);
+            System.out.println("Your Account balance is : Rs " + Customer.customer_list.get(Global.index).getWallet());
             Login_Menu();
         } else if (choice4 == 7) {
             Cart.View_Cart();
@@ -239,27 +265,32 @@ public class Customer {
     }
 
     public static void Login() {
-        System.out.print("Enter Name: ");
-        Scanner sc = new Scanner(System.in);
-        String name = sc.nextLine();
-        System.out.print("Enter password: ");
-        String password = sc.nextLine();
-        //Global(name,password);
-        Global.temp1 = name;
-        Global.temp2 = password;
-        for (int i = 0; i < Customer.customer_list.size(); i++) {
-            if ((name.equals((Customer.customer_list.get(i).customer_name))) && (password.equals(Customer.customer_list.get(i).customer_password))) {
-                System.out.println("-------------------------Welcome " + name + "!!!--------------");
-                Login_Menu();
-            } else {
-                System.out.println("Wrong Credentials or User not registered!!! \nTry to register for user with these credentials by pressing 1 or Login again by pressing 2:  ");
-                int temp = sc.nextInt();
-                if (temp == 1) {
-                    Signup();
-                } else if (temp == 2) {
-                    Login();
+        if (Customer.customer_list.size() == 0) {
+            System.out.println("Please sign up first");
+            Customer_Menu();
+        } else {
+            System.out.print("Enter Name: ");
+            Scanner sc = new Scanner(System.in);
+            String name = sc.nextLine();
+            System.out.print("Enter password: ");
+            String password = sc.nextLine();
+            //Global(name,password);
+            Global.temp1 = name;
+            Global.temp2 = password;
+            for (int i = 0; i < Customer.customer_list.size(); i++) {
+                if ((name.equals((Customer.customer_list.get(i).customer_name))) && (password.equals(Customer.customer_list.get(i).customer_password))) {
+                    System.out.println("-------------------------Welcome " + name + "!!!--------------");
+                    Login_Menu();
                 } else {
-                    FLIPZON.Main_Menu();
+                    System.out.println("Wrong Credentials or User not registered!!! \nTry to register for user with these credentials by pressing 1 or Login again by pressing 2:  ");
+                    int temp = sc.nextInt();
+                    if (temp == 1) {
+                        Signup();
+                    } else if (temp == 2) {
+                        Login();
+                    } else {
+                        FLIPZON.Main_Menu();
+                    }
                 }
             }
         }

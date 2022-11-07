@@ -46,6 +46,11 @@ class Deals extends Product{
         this.ID1=ID1;
         this.ID2=ID2;
         this.price=price;
+        //Cart.Total_amount+=price;
+    }
+    public Deals(float paisa){
+        Cart.Total_amount+=price;
+
     }
 }
 class Cart extends Deals {
@@ -62,13 +67,28 @@ class Cart extends Deals {
         this.name = name;
         this.price = price;
         this.Features = details;
-        //Cart.Total_amount += price;
+        Cart.Total_amount += price;
     }
 
     static ArrayList<Deals> deals = new ArrayList<Deals>();
     static ArrayList<Cart> cart_list = new ArrayList<Cart>();
 
+    public static void Available_Deals(int parameter2){
+        if(Deals.deals_list.isEmpty()){
+            System.out.println("-------------------------NO Deals Available!!----------------------------");
+            Customer.Login_Menu();
+        }else{
+            for(int x=0;x<Deals.deals_list.size();x++){
+                System.out.println("ID of Ist product: "+Deals.deals_list.get(x).ID1);
+                System.out.println("ID of 2nd product: "+Deals.deals_list.get(x).ID2);
+                System.out.println("Giveaway Price: "+Deals.deals_list.get(x).price);
+                System.out.println("------------------------------------------------------------------");
+                System.out.println(" ");
+            }
+        }
+    }
     public static void Add_To_Cart() {
+        Customer.Product_Catalog(0);
         System.out.print("Enter product ID: ");
         Scanner sc = new Scanner(System.in);
         double id = sc.nextDouble();
@@ -97,6 +117,7 @@ class Cart extends Deals {
     }
 
     public static void Add_Deals_To_Cart() {
+        Available_Deals(0);
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter index of deal you want to add in cart: ");
         int tempo = sc.nextInt();
@@ -165,7 +186,7 @@ class Cart extends Deals {
                 System.out.println("----------------------------------------------");
                 System.out.println(" ");
             }
-            System.out.println("Total amount of all items in cart: " + Cart.Total_amount);
+            System.out.println("Total amount of all items in cart: " + Cart.Total_amount+"/-");
             System.out.println("--------------------------------------------------");
             System.out.println(" ");
             Customer.Login_Menu();
@@ -176,9 +197,11 @@ class Cart extends Deals {
         if (!Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int i = 0; i < Cart.deals.size(); i++) {
                 Cart.deals.remove(i);
+                Cart.Total_amount=0;
             }
             for (int w = 0; w < Cart.cart_list.size(); w++) {
                 Cart.cart_list.remove(w);
+                Cart.Total_amount=0;
             }
             System.out.println("Cart is empty now!!");
             Customer.Login_Menu();
@@ -186,12 +209,14 @@ class Cart extends Deals {
         } else if (Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int i = 0; i < Cart.deals.size(); i++) {
                 Cart.deals.remove(i);
+                Cart.Total_amount=0;
             }
             System.out.println("Cart is empty now!!");
             Customer.Login_Menu();
         } else if (Cart.deals.isEmpty() && (!Cart.cart_list.isEmpty())) {
             for (int w = 0; w < Cart.cart_list.size(); w++) {
                 Cart.cart_list.remove(w);
+                Cart.Total_amount=0;
             }
             System.out.println("Cart is empty now!!");
             Customer.Login_Menu();
@@ -266,15 +291,16 @@ class Cart extends Deals {
                 }
             }
             Delivery_charge += (cart_price / 100) * 2;
-            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).Wallet) {
+            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
             } else {
-                Customer.customer_list.get(Global.index).Wallet -= (cart_price + Delivery_charge);
+                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
                 Cart.cart_list.clear();
                 int rand_temp = (int) Math.floor(Math.random() * (6 - 3 + 1) + 3);
                 System.out.println("Order placed successfully!!!!");
                 System.out.println("Your order will be placed in " + rand_temp + " days!!");
+                Cart.Empty_Cart();
                 Customer.disc_list.remove(Customer.disc_list.size() - 1);
                 int rand_tem = (int) Math.floor(Math.random() * (2 - 1 + 1) + 1);
                 for (int j = 0; j < rand_tem; j++) {
@@ -303,15 +329,16 @@ class Cart extends Deals {
                     cart_price += Cart.cart_list.get(z).price;
                 }
             }
-            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).Wallet) {
+            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
             } else {
-                Customer.customer_list.get(Global.index).Wallet -= (cart_price + Delivery_charge);
+                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
                 Customer.disc_list.remove(Customer.disc_list.size() - 1);
                 System.out.println("Order placed!!!\nYour order will be delivered within 2 days.......");
+                Cart.Empty_Cart();
                 int loop = (int) Math.floor(Math.random() * (3 - 4 + 1) + 4);
                 for (int j = 0; j < loop; j++) {
                     int count4 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
@@ -326,15 +353,16 @@ class Cart extends Deals {
 
             }
             Delivery_charge+=(cart_price/100)*5;
-            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).Wallet) {
+            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
             } else {
-                Customer.customer_list.get(Global.index).Wallet -= (cart_price + Delivery_charge);
+                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
                 int count = (int) Math.floor(Math.random() * (10 - 7 + 1) + 7);
                 System.out.println("Order placed!!!\nYour order will be delivered within "+count+" days.......");
+                Cart.Empty_Cart();
                 }
                 Customer.Login_Menu();
             }

@@ -11,6 +11,7 @@ public class FLIPZON {
                 System.out.println("Product Name: "+Product.product_list.get(x).name);
                 System.out.println("Product Details: "+Product.product_list.get(x).Features);
                 System.out.println("Product Price: Rs "+Product.product_list.get(x).price+"/-");
+                System.out.println("In Stock : "+Product.product_list.get(x).quantity);
                 System.out.println("------------------------------------------------------------------");
                 System.out.println(" ");
             }
