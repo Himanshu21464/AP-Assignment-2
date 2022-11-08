@@ -32,6 +32,7 @@ public class Customer {
         this.Status = "NORMAL";
         this.Wallet = 1000;
         this.coupons = 0;
+        disc_list.add(0);
         //this.coupons_discount = Administrator.discount_Normal;
     }
     public static void Product_Catalog(int parameter){
@@ -52,11 +53,16 @@ public class Customer {
         }
     }
     public static float max_utility(){
+        float max;
         Collections.sort(disc_list);
-        float max=disc_list.get(disc_list.size()-1);
+        Collections.sort(disc_list);
+        if(disc_list.isEmpty()){
+            max=0;
+        }else {
+            max = disc_list.get(0);
+        }
         return max;
     }
-
     public static void Login_Menu() {
         Scanner sc = new Scanner(System.in);
         System.out.println("------------------------------------------------------------------");
@@ -251,7 +257,6 @@ public class Customer {
             Customer_Menu();
         }
     }
-
     public static void Signup() {
         System.out.print("Enter Name: ");
         Scanner sc = new Scanner(System.in);
@@ -263,7 +268,6 @@ public class Customer {
         System.out.println("Customer successfully registered!!!");
         Customer_Menu();
     }
-
     public static void Login() {
         if (Customer.customer_list.size() == 0) {
             System.out.println("Please sign up first");

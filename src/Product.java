@@ -257,12 +257,12 @@ class Cart extends Deals {
         if (!Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int i = 0; i < Cart.deals.size(); i++) {
                 Cart.deals.remove(i);
-                Cart.Total_amount=0;
+                //Cart.Total_amount=0;
             }
             for (int w = 0; w < Cart.cart_list.size(); w++) {
                 Cart.cart_list.remove(w);
 
-                Cart.Total_amount=0;
+                //Cart.Total_amount=0;
             }
             System.out.println("Cart is empty now!!");
             Customer.Login_Menu();
@@ -270,7 +270,7 @@ class Cart extends Deals {
         } else if (Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int i = 0; i < Cart.deals.size(); i++) {
                 Cart.deals.remove(i);
-                Cart.Total_amount=0;
+                //Cart.Total_amount=0;
             }
             System.out.println("Cart is empty now!!");
             Customer.Login_Menu();
@@ -282,7 +282,7 @@ class Cart extends Deals {
                     }
                 }
                 Cart.cart_list.remove(w);
-                Cart.Total_amount=0;
+                //Cart.Total_amount=0;
 
             }
             System.out.println("Cart is empty now!!");
@@ -365,14 +365,19 @@ class Cart extends Deals {
                 int rand_temp = (int) Math.floor(Math.random() * (6 - 3 + 1) + 3);
                 System.out.println("Order placed successfully!!!!");
                 System.out.println("Your order will be placed in " + rand_temp + " days!!");
-                //Cart.Empty_Cart();
-                Customer.disc_list.remove(Customer.disc_list.size() - 1);
+                Cart.Empty_Cart();
+                Customer.disc_list.remove(0);
                 int rand_tem = (int) Math.floor(Math.random() * (2 - 1 + 1) + 1);
-                for (int j = 0; j < rand_tem; j++) {
-                    int count3 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
-                    Customer.disc_list.add(count3);
+
+                if(cart_price>5000) {
+                    for (int j = 0; j < rand_tem; j++) {
+                        int count3 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
+                        Customer.disc_list.add(count3);
+                    }
+                    Customer.Login_Menu();
+                }else{
+                    Customer.Login_Menu();
                 }
-                Customer.Login_Menu();
             }
 
         } else if (Customer.customer_list.get(Global.index).Status.equals("ELITE")) {
@@ -382,7 +387,7 @@ class Cart extends Deals {
                     discount_coupons = MAX;
 
                 } else {
-                    discount_coupons = 10;
+                    discount_coupons = 15;
                 }
             }
             for (int z = 0; z < (Cart.cart_list.size()); z++) {
@@ -401,15 +406,19 @@ class Cart extends Deals {
                 Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
-                Customer.disc_list.remove(Customer.disc_list.size() - 1);
+                Customer.disc_list.remove(0);
                 System.out.println("Order placed!!!\nYour order will be delivered within 2 days.......");
-                //Cart.Empty_Cart();
+                Cart.Empty_Cart();
                 int loop = (int) Math.floor(Math.random() * (3 - 4 + 1) + 4);
-                for (int j = 0; j < loop; j++) {
-                    int count4 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
-                    Customer.disc_list.add(count4);
+                if (cart_price > 5000) {
+                    for (int j = 0; j < loop; j++) {
+                        int count4 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
+                        Customer.disc_list.add(count4);
+                    }
+                    Customer.Login_Menu();
+                }else{
+                    Customer.Login_Menu();
                 }
-                Customer.Login_Menu();
             }
 
         }else if (Customer.customer_list.get(Global.index).Status.equals("NORMAL")) {
