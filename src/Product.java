@@ -59,7 +59,6 @@ class Cart extends Deals {
     double product_id;
     static int Total_amount;
     static int list = 0;
-
     public Cart(double product_id, int quantity, String name, double price, String details) {
         this.product_id = product_id;
         this.quantity = quantity;
@@ -69,10 +68,15 @@ class Cart extends Deals {
         this.Features = details;
         Cart.Total_amount += price;
     }
-
     static ArrayList<Deals> deals = new ArrayList<Deals>();
     static ArrayList<Cart> cart_list = new ArrayList<Cart>();
-
+    public static void qty_maintain(double i, int q){
+        for (int r=0;r<product_list.size();r++){
+            if(product_list.get(r).ID==i){
+                product_list.get(r).quantity-=q;
+            }
+        }
+    }
     public static void Available_Deals(int parameter2){
         if(Deals.deals_list.isEmpty()){
             System.out.println("-------------------------NO Deals Available!!----------------------------");
@@ -98,16 +102,22 @@ class Cart extends Deals {
                 flag4 = true;
                 System.out.print("Enter quantity: ");
                 int qty = sc.nextInt();
-                String name = Product.product_list.get(i).name;
-                double price = Product.product_list.get(i).price * qty;
-                String details = Product.product_list.get(i).Features;
-                Cart item = new Cart(id, qty, name, price, details);
-                cart_list.add(item);
-                System.out.println("Product added to Cart successfully!!!");
-                System.out.println("--------------------------------------------------");
-                System.out.println(" ");
-                Customer.Login_Menu();
-                //Cart.Total_amount+=price;
+                if(product_list.get(i).quantity<qty){
+                    System.out.println(" Product is out of Stock!!!");
+                    Customer.Login_Menu();
+                }else {
+                    String name = Product.product_list.get(i).name;
+                    double price = Product.product_list.get(i).price * qty;
+                    String details = Product.product_list.get(i).Features;
+                    Cart item = new Cart(id, qty, name, price, details);
+                    cart_list.add(item);
+                    System.out.println("Product added to Cart successfully!!!");
+                    qty_maintain(id, qty);
+                    System.out.println("--------------------------------------------------");
+                    System.out.println(" ");
+                    Customer.Login_Menu();
+                    //Cart.Total_amount+=price;
+                }
             }
         }
         if (flag4 == false) {
@@ -115,7 +125,6 @@ class Cart extends Deals {
             Customer.Login_Menu();
         }
     }
-
     public static void Add_Deals_To_Cart() {
         Available_Deals(0);
         Scanner sc = new Scanner(System.in);
@@ -138,7 +147,59 @@ class Cart extends Deals {
             Customer.Login_Menu();
         }
     }
+    public static void View_Cart(int qwerty){
+            if ((Cart.cart_list.isEmpty()) && (Cart.deals.isEmpty())) {
+                System.out.println("Cart is Empty!!");
+                System.out.println("--------------------------------------------------");
+                System.out.println(" ");
 
+            } else if (Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
+                for (int s = 0; s < Cart.deals.size(); s++) {
+                    System.out.println("ID of Ist Product: " + Cart.deals.get(s).ID1);
+                    System.out.println("ID of 2nd Product: " + Cart.deals.get(s).ID2);
+                    System.out.println("Giveaway price: " + Cart.deals.get(s).price);
+                    System.out.println("----------------------------------------------");
+                    System.out.println(" ");
+                }
+                System.out.println("Total amount of all items in cart: " + Cart.Total_amount);
+                System.out.println("--------------------------------------------------");
+                System.out.println(" ");
+
+            } else if (Cart.deals.isEmpty() && (!Cart.cart_list.isEmpty())) {
+                for (int x = 0; x < Cart.cart_list.size(); x++) {
+                    System.out.println("Product ID: " + Cart.cart_list.get(x).product_id);
+                    System.out.println("Product Name: " + Cart.cart_list.get(x).name);
+                    System.out.println("Product Details: " + Cart.cart_list.get(x).Features);
+                    System.out.println("Price: Rs " + Cart.cart_list.get(x).price + "/-");
+                    System.out.println("----------------------------------------------");
+                    System.out.println(" ");
+                }
+                System.out.println("Total amount of all items in cart: " + Cart.Total_amount);
+                System.out.println("--------------------------------------------------");
+                System.out.println(" ");
+
+            } else {
+                for (int u = 0; u < Cart.deals.size(); u++) {
+                    System.out.println("ID of Ist Product: " + Cart.deals.get(u).ID1);
+                    System.out.println("ID of 2nd Product: " + Cart.deals.get(u).ID2);
+                    System.out.println("Giveaway price: " + Cart.deals.get(u).price+"/-");
+                    System.out.println("----------------------------------------------");
+                    System.out.println(" ");
+                }
+                for (int v = 0; v < Cart.cart_list.size(); v++) {
+                    System.out.println("Product ID: " + Cart.cart_list.get(v).product_id);
+                    System.out.println("Product Name: " + Cart.cart_list.get(v).name);
+                    System.out.println("Product Details: " + Cart.cart_list.get(v).Features);
+                    System.out.println("Price: Rs " + Cart.cart_list.get(v).price + "/-");
+                    System.out.println("----------------------------------------------");
+                    System.out.println(" ");
+                }
+                System.out.println("Total amount of all items in cart: " + Cart.Total_amount+"/-");
+                System.out.println("--------------------------------------------------");
+                System.out.println(" ");
+
+            }
+        }
     public static void View_Cart() {
         if ((Cart.cart_list.isEmpty()) && (Cart.deals.isEmpty())) {
             System.out.println("Cart is Empty!!");
@@ -162,7 +223,7 @@ class Cart extends Deals {
                 System.out.println("Product ID: " + Cart.cart_list.get(x).product_id);
                 System.out.println("Product Name: " + Cart.cart_list.get(x).name);
                 System.out.println("Product Details: " + Cart.cart_list.get(x).Features);
-                System.out.println("Product Price: Rs " + Cart.cart_list.get(x).price + "/-");
+                System.out.println("Price: Rs " + Cart.cart_list.get(x).price + "/-");
                 System.out.println("----------------------------------------------");
                 System.out.println(" ");
             }
@@ -174,7 +235,7 @@ class Cart extends Deals {
             for (int u = 0; u < Cart.deals.size(); u++) {
                 System.out.println("ID of Ist Product: " + Cart.deals.get(u).ID1);
                 System.out.println("ID of 2nd Product: " + Cart.deals.get(u).ID2);
-                System.out.println("Giveaway price: " + Cart.deals.get(u).price);
+                System.out.println("Giveaway price: " + Cart.deals.get(u).price+"/-");
                 System.out.println("----------------------------------------------");
                 System.out.println(" ");
             }
@@ -182,7 +243,7 @@ class Cart extends Deals {
                 System.out.println("Product ID: " + Cart.cart_list.get(v).product_id);
                 System.out.println("Product Name: " + Cart.cart_list.get(v).name);
                 System.out.println("Product Details: " + Cart.cart_list.get(v).Features);
-                System.out.println("Product Price: Rs " + Cart.cart_list.get(v).price + "/-");
+                System.out.println("Price: Rs " + Cart.cart_list.get(v).price + "/-");
                 System.out.println("----------------------------------------------");
                 System.out.println(" ");
             }
@@ -192,7 +253,6 @@ class Cart extends Deals {
             Customer.Login_Menu();
         }
     }
-
     public static void Empty_Cart() {
         if (!Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int i = 0; i < Cart.deals.size(); i++) {
@@ -201,6 +261,7 @@ class Cart extends Deals {
             }
             for (int w = 0; w < Cart.cart_list.size(); w++) {
                 Cart.cart_list.remove(w);
+
                 Cart.Total_amount=0;
             }
             System.out.println("Cart is empty now!!");
@@ -215,8 +276,14 @@ class Cart extends Deals {
             Customer.Login_Menu();
         } else if (Cart.deals.isEmpty() && (!Cart.cart_list.isEmpty())) {
             for (int w = 0; w < Cart.cart_list.size(); w++) {
+                for (int c=0;c<product_list.size();c++){
+                    if(product_list.get(c).ID==Cart.cart_list.get(w).product_id){
+                        product_list.get(c).quantity+=Cart.cart_list.get(w).quantity;
+                    }
+                }
                 Cart.cart_list.remove(w);
                 Cart.Total_amount=0;
+
             }
             System.out.println("Cart is empty now!!");
             Customer.Login_Menu();
@@ -225,10 +292,12 @@ class Cart extends Deals {
             Customer.Login_Menu();
         }
     }
-
     public static void Checkout() {
+        int discount_coupons = 0;
+        double cart_price = 0, Delivery_charge = 100;
+        int MAX;
         System.out.println("Proceeding to checkout, Details: ");
-        //View_Cart();
+        View_Cart(0);
         int i = 0;
         Random random = new Random();
         if (Customer.customer_list.get(Global.index).Status.equals("PRIME")) {
@@ -267,10 +336,6 @@ class Cart extends Deals {
             }
         }
 
-        int discount_coupons = 0;
-        double cart_price = 0, Delivery_charge = 100;
-
-        int MAX;
         if (Customer.customer_list.get(Global.index).Status.equals("PRIME")) {
             MAX = (int) Customer.max_utility();
             if (!Customer.disc_list.isEmpty()) {
@@ -300,7 +365,7 @@ class Cart extends Deals {
                 int rand_temp = (int) Math.floor(Math.random() * (6 - 3 + 1) + 3);
                 System.out.println("Order placed successfully!!!!");
                 System.out.println("Your order will be placed in " + rand_temp + " days!!");
-                Cart.Empty_Cart();
+                //Cart.Empty_Cart();
                 Customer.disc_list.remove(Customer.disc_list.size() - 1);
                 int rand_tem = (int) Math.floor(Math.random() * (2 - 1 + 1) + 1);
                 for (int j = 0; j < rand_tem; j++) {
@@ -338,7 +403,7 @@ class Cart extends Deals {
                 System.out.println("Order placed successfully!!!!");
                 Customer.disc_list.remove(Customer.disc_list.size() - 1);
                 System.out.println("Order placed!!!\nYour order will be delivered within 2 days.......");
-                Cart.Empty_Cart();
+                //Cart.Empty_Cart();
                 int loop = (int) Math.floor(Math.random() * (3 - 4 + 1) + 4);
                 for (int j = 0; j < loop; j++) {
                     int count4 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);

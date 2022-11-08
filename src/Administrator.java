@@ -150,8 +150,7 @@ public class Administrator {
             System.out.print("Enter discount for NORMAL CUSTOMERS in % :");
             discount_Normal=sc.nextInt();
             normal_list.add(discount_Normal);
-            System.out.print
-                    ("-------------------------------------------------");
+            System.out.print("-------------------------------------------------");
             System.out.println(" ");
             Admin_Menu();
             //System.out.println("Wrong Input!!!");
