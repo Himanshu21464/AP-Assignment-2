@@ -14,23 +14,34 @@ public class Administrator {
         Scanner sc=new Scanner(System.in);
         int ID=sc.nextInt();
         sc.nextLine();
-        System.out.print("Add name of category: ");
-        String category = sc.nextLine();
-        int w=-1;
-        for(int q=0;q<Category.category_list.size();q++){
-            if(Category.category_list.get(q).category==ID){
-                w=q;
+        boolean FLAG5=false;
+        for (int t=0;t<Category.category_list.size();t++){
+            if(Category.category_list.get(t).category==ID){
+                FLAG5=true;
             }
         }
-        if(w==-1) {
-            Category category1 = new Category(ID, category);
-            Category.category_list.add(category1);
-            System.out.println("Category Added Successfully");
-            System.out.println(Category.category_list.size());
+        if(FLAG5==true){
+            System.out.println("Category with same ID is already exists!!");
             Admin_Menu();
         }else {
-            System.out.println("Category Already Exist");
-            Admin_Menu();
+            System.out.print("Add name of category: ");
+            String category = sc.nextLine();
+            int w = -1;
+            for (int q = 0; q < Category.category_list.size(); q++) {
+                if (Category.category_list.get(q).category == ID) {
+                    w = q;
+                }
+            }
+            if (w == -1) {
+                Category category1 = new Category(ID, category);
+                Category.category_list.add(category1);
+                System.out.println("Category Added Successfully");
+                System.out.println(Category.category_list.size());
+                Admin_Menu();
+            } else {
+                System.out.println("Category Already Exist");
+                Admin_Menu();
+            }
         }
     }
     public static void Delete_Category() {

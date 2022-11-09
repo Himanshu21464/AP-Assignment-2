@@ -366,6 +366,10 @@ class Cart extends Deals{
                 Cart.cart_list.clear();
                 int rand_temp = (int) Math.floor(Math.random() * (6 - 3 + 1) + 3);
                 System.out.println("Order placed successfully!!!!");
+                System.out.println("Order details:-");
+                View_Cart();
+                System.out.println("Delievery charge (100 + 2% of total amount): "+Delivery_charge);
+                System.out.println("Total amount : "+cart_price);
                 System.out.println("Your order will be placed in " + rand_temp + " days!!");
                 Cart.Empty_Cart();
                 Customer.disc_list.remove(0);
@@ -408,6 +412,10 @@ class Cart extends Deals{
                 Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
+                System.out.println("Order details:-");
+                View_Cart();
+                System.out.println("Delievery charge : "+Delivery_charge);
+                System.out.println("Total amount : "+cart_price);
                 Customer.disc_list.remove(0);
                 System.out.println("Order placed!!!\nYour order will be delivered within 2 days.......");
                 Cart.Empty_Cart();
@@ -436,6 +444,10 @@ class Cart extends Deals{
                 Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
+                System.out.println("Order details:-");
+                View_Cart();
+                System.out.println("Delievery charge (100 + 5% of total amount): "+Delivery_charge);
+                System.out.println("Total amount : "+cart_price);
                 int count = (int) Math.floor(Math.random() * (10 - 7 + 1) + 7);
                 System.out.println("Order placed!!!\nYour order will be delivered within "+count+" days.......");
                 Cart.Empty_Cart();
