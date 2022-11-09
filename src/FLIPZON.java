@@ -18,6 +18,7 @@ public class FLIPZON {
             Main_Menu();
         }
     }
+
     public static void Available_Deals(){
         if(Deals.deals_list.isEmpty()){
             System.out.println("-------------------------NO Deals Available!!----------------------------");

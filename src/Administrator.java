@@ -97,6 +97,9 @@ public class Administrator {
             }
         }
     }
+    interface prints{
+        void print();
+    }
     public static void Delete_Product(){
         System.out.print("Enter ID of category: ");
         Scanner sc=new Scanner(System.in);

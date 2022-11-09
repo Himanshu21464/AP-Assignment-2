@@ -8,8 +8,10 @@ class Global {
     static int index;
     static int cart_quantity;
 }
-
-public class Customer {
+interface Printable{
+    void print_();
+}
+public class Customer implements Printable{
     String customer_name;
     String customer_password;
     String Status;
@@ -21,6 +23,9 @@ public class Customer {
     public double getWallet() {
         return Wallet;
     }
+    public void print_(){
+        System.out.println("Customer successfully registered!!!");
+    };
 
     public void setWallet(double wallet) {
         Wallet -= wallet;
@@ -265,7 +270,7 @@ public class Customer {
         String password = sc.nextLine();
         Customer customer = new Customer(name, password);
         Customer.customer_list.add(customer);
-        System.out.println("Customer successfully registered!!!");
+        customer.print_();
         Customer_Menu();
     }
     public static void Login() {

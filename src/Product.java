@@ -16,6 +16,8 @@ class Category{
         this.category=category;
     }
 }
+
+
 class Product extends Category {
     String name;
     double ID;
@@ -53,7 +55,7 @@ class Deals extends Product{
 
     }
 }
-class Cart extends Deals {
+class Cart extends Deals{
     int quantity;
     static float discnt = 0;
     double product_id;
