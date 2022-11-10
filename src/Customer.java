@@ -58,8 +58,8 @@ public class Customer implements Printable{
     }
     public static float max_utility(){
         float max;
-        Collections.sort(disc_list);
-        //Collections.sort(disc_list);
+        Collections.sort(disc_list, Collections.reverseOrder());
+
         if(disc_list.isEmpty()){
             max=0;
         }else {
