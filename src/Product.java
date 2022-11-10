@@ -51,7 +51,7 @@ class Deals extends Product{
         //Cart.Total_amount+=price;
     }
     public Deals(float paisa){
-        Cart.Total_amount+=price;
+        Cart.Total_amount+=paisa;
 
     }
 }
@@ -401,7 +401,7 @@ class Cart extends Deals{
                 deals_price+=Cart.deals.get(f).price;
             }
 
-            Delivery_charge += ((cart_price+deals_price) / 100) * 2;
+            Delivery_charge += ((Cart.Total_amount) / 100) * 2;
             if ((cart_price + Delivery_charge + deals_price) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
@@ -499,7 +499,7 @@ class Cart extends Deals{
             for(int f=0;f<Cart.deals.size();f++){
                 deals_price+=Cart.deals.get(f).price;
             }
-            Delivery_charge+=((cart_price+deals_price)/100)*5;
+            Delivery_charge+=((Cart.Total_amount)/100)*5;
             if ((cart_price + Delivery_charge+ deals_price) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
