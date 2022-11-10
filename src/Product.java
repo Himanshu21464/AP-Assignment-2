@@ -256,6 +256,7 @@ class Cart extends Deals{
         }
     }
     public static void Empty_Cart() {
+        Cart.Total_amount=0;
         if (!Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int i = 0; i < Cart.deals.size(); i++) {
                 Cart.deals.remove(i);
@@ -294,10 +295,47 @@ class Cart extends Deals{
             Customer.Login_Menu();
         }
     }
+    public static void Empty_Cart(int we) {
+        Cart.Total_amount=0;
+        if (!Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
+            for (int i = 0; i < Cart.deals.size(); i++) {
+                Cart.deals.remove(i);
+                //Cart.Total_amount=0;
+            }
+            for (int w = 0; w < Cart.cart_list.size(); w++) {
+                Cart.cart_list.remove(w);
+
+                //Cart.Total_amount=0;
+            }
+
+
+        } else if (Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
+            for (int i = 0; i < Cart.deals.size(); i++) {
+                Cart.deals.remove(i);
+                //Cart.Total_amount=0;
+            }
+
+        } else if (Cart.deals.isEmpty() && (!Cart.cart_list.isEmpty())) {
+            for (int w = 0; w < Cart.cart_list.size(); w++) {
+                for (int c=0;c<product_list.size();c++){
+                    if(product_list.get(c).ID==Cart.cart_list.get(w).product_id){
+                        product_list.get(c).quantity+=Cart.cart_list.get(w).quantity;
+                    }
+                }
+                Cart.cart_list.remove(w);
+                //Cart.Total_amount=0;
+
+            }
+
+        } else {
+            System.out.println(" ");
+        }
+    }
     public static void Checkout() {
         int discount_coupons = 0;
         double cart_price = 0, Delivery_charge = 100;
         int MAX;
+        double deals_price= 0;
         System.out.println("Proceeding to checkout, Details: ");
         View_Cart(0);
         int i = 0;
@@ -347,6 +385,8 @@ class Cart extends Deals{
                 } else {
                     discount_coupons = 5;
                 }
+            }else if(Customer.disc_list.isEmpty()){
+                discount_coupons=(int)Administrator.discount_Prime;
             }
             for (int z = 0; z < (Cart.cart_list.size()); z++) {
                 if (Cart.cart_list.get(z).disc >= discount_coupons) {
@@ -357,28 +397,38 @@ class Cart extends Deals{
                     cart_price += Cart.cart_list.get(z).price;
                 }
             }
-            Delivery_charge += (cart_price / 100) * 2;
-            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).getWallet()) {
+            for(int f=0;f<Cart.deals.size();f++){
+                deals_price+=Cart.deals.get(f).price;
+            }
+
+            Delivery_charge += ((cart_price+deals_price) / 100) * 2;
+            if ((cart_price + Delivery_charge + deals_price) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
             } else {
-                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
+                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge+ deals_price));
                 Cart.cart_list.clear();
                 int rand_temp = (int) Math.floor(Math.random() * (6 - 3 + 1) + 3);
                 System.out.println("Order placed successfully!!!!");
                 System.out.println("Order details:-");
-                View_Cart();
+                View_Cart(0);
                 System.out.println("Delievery charge (100 + 2% of total amount): "+Delivery_charge);
-                System.out.println("Total amount : "+cart_price);
+                double r=cart_price+Delivery_charge+ deals_price;
+                System.out.println("Total amount : "+r);
                 System.out.println("Your order will be placed in " + rand_temp + " days!!");
-                Cart.Empty_Cart();
-                Customer.disc_list.remove(0);
+                Cart.Empty_Cart(0);
+                Cart.Total_amount=0;
+                if(!Customer.disc_list.isEmpty()) {
+                    Customer.disc_list.remove(0);
+                }
                 int rand_tem = (int) Math.floor(Math.random() * (2 - 1 + 1) + 1);
+
 
                 if(cart_price>5000) {
                     for (int j = 0; j < rand_tem; j++) {
                         int count3 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
                         Customer.disc_list.add(count3);
+                        System.out.println("Congratulations!! You got some coupons");
                     }
                     Customer.Login_Menu();
                 }else{
@@ -393,8 +443,10 @@ class Cart extends Deals{
                     discount_coupons = MAX;
 
                 } else {
-                    discount_coupons = 15;
+                    discount_coupons = 10;
                 }
+            }else if(Customer.disc_list.isEmpty()){
+                discount_coupons=(int)Administrator.discount_Elite;
             }
             for (int z = 0; z < (Cart.cart_list.size()); z++) {
                 if (Cart.cart_list.get(z).disc >= discount_coupons) {
@@ -405,25 +457,33 @@ class Cart extends Deals{
                     cart_price += Cart.cart_list.get(z).price;
                 }
             }
-            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).getWallet()) {
+            for(int f=0;f<Cart.deals.size();f++){
+                deals_price+=Cart.deals.get(f).price;
+            }
+            if ((cart_price + Delivery_charge+ deals_price) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
             } else {
-                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
+                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge+ deals_price));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
                 System.out.println("Order details:-");
-                View_Cart();
+                View_Cart(0);
                 System.out.println("Delievery charge : "+Delivery_charge);
-                System.out.println("Total amount : "+cart_price);
-                Customer.disc_list.remove(0);
+                double x=cart_price+Delivery_charge+ deals_price;
+                System.out.println("Total amount : "+x);
+                if(!Customer.disc_list.isEmpty()) {
+                    Customer.disc_list.remove(0);
+                }
                 System.out.println("Order placed!!!\nYour order will be delivered within 2 days.......");
-                Cart.Empty_Cart();
+                Cart.Empty_Cart(0);
+                Cart.Total_amount=0;
                 int loop = (int) Math.floor(Math.random() * (3 - 4 + 1) + 4);
                 if (cart_price > 5000) {
                     for (int j = 0; j < loop; j++) {
                         int count4 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
                         Customer.disc_list.add(count4);
+                        System.out.println("Congratulations!! You got some coupons");
                     }
                     Customer.Login_Menu();
                 }else{
@@ -436,21 +496,26 @@ class Cart extends Deals{
                 cart_price+= Cart.cart_list.get(j).price;
 
             }
-            Delivery_charge+=(cart_price/100)*5;
-            if ((cart_price + Delivery_charge) >= Customer.customer_list.get(Global.index).getWallet()) {
+            for(int f=0;f<Cart.deals.size();f++){
+                deals_price+=Cart.deals.get(f).price;
+            }
+            Delivery_charge+=((cart_price+deals_price)/100)*5;
+            if ((cart_price + Delivery_charge+ deals_price) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
                 Customer.Login_Menu();
             } else {
-                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge));
+                Customer.customer_list.get(Global.index).setWallet((cart_price + Delivery_charge+ deals_price));
                 Cart.cart_list.clear();
                 System.out.println("Order placed successfully!!!!");
                 System.out.println("Order details:-");
-                View_Cart();
+                View_Cart(0);
                 System.out.println("Delievery charge (100 + 5% of total amount): "+Delivery_charge);
-                System.out.println("Total amount : "+cart_price);
+                double t=cart_price+Delivery_charge+ deals_price;
+                System.out.println("Total amount : "+t);
                 int count = (int) Math.floor(Math.random() * (10 - 7 + 1) + 7);
                 System.out.println("Order placed!!!\nYour order will be delivered within "+count+" days.......");
-                Cart.Empty_Cart();
+                Cart.Empty_Cart(0);
+                Cart.Total_amount=0;
                 }
                 Customer.Login_Menu();
             }
