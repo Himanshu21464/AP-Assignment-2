@@ -26,7 +26,10 @@ public class FLIPZON {
             for(int x=0;x<Deals.deals_list.size();x++){
                 System.out.println("ID of Ist product: "+Deals.deals_list.get(x).ID1);
                 System.out.println("ID of 2nd product: "+Deals.deals_list.get(x).ID2);
-                System.out.println("Giveaway Price: "+Deals.deals_list.get(x).price);
+                System.out.println("Giveaway Price (NORMAL) : "+Deals.deals_list.get(x).price);
+                System.out.println("Giveaway Price (PRIME)  : "+Deals.deals_list.get(x).prime_price);
+                System.out.println("Giveaway Price (ELITE)  : "+Deals.deals_list.get(x).elite_price);
+
                 System.out.println("------------------------------------------------------------------");
                 System.out.println(" ");
             }

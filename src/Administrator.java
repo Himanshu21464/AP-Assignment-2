@@ -188,9 +188,15 @@ public class Administrator {
                 }
             }
             if(index2>=0) {
-                System.out.print("Enter the giveaway price in rupees(should be less then their combined price): ");
+                System.out.println("Enter the giveaway price in rupees(should be less then their combined price): ");
+                System.out.print("price for NORMAL customers: ");
                 double price = sc.nextInt();
-                Deals deals = new Deals(id1, id2, price);
+                System.out.print("price for PRIME customers: ");
+                double prime_price = sc.nextInt();
+                System.out.print("price for ELITE customers: ");
+                double elite_price = sc.nextInt();
+
+                Deals deals = new Deals(id1, id2, price,elite_price,prime_price);
                 Deals.deals_list.add(deals);
                 System.out.println("--------------------------------------------------");
                 System.out.println(" ");

@@ -16,8 +16,6 @@ class Category{
         this.category=category;
     }
 }
-
-
 class Product extends Category {
     String name;
     double ID;
@@ -41,18 +39,19 @@ class Product extends Category {
     }
 }
 class Deals extends Product{
-    double price, ID1, ID2;
+    double price,elite_price,prime_price, ID1, ID2;
     static ArrayList<Deals> deals_list=new ArrayList<Deals>();
     public Deals(){}
-    public Deals(double ID1,double ID2,double price){
+    public Deals(double ID1,double ID2,double price,double elite_price, double prime_price){
         this.ID1=ID1;
         this.ID2=ID2;
         this.price=price;
+        this.prime_price=prime_price;
+        this.elite_price=elite_price;
         //Cart.Total_amount+=price;
     }
     public Deals(float paisa){
         Cart.Total_amount+=paisa;
-
     }
 }
 class Cart extends Deals{
@@ -87,7 +86,10 @@ class Cart extends Deals{
             for(int x=0;x<Deals.deals_list.size();x++){
                 System.out.println("ID of Ist product: "+Deals.deals_list.get(x).ID1);
                 System.out.println("ID of 2nd product: "+Deals.deals_list.get(x).ID2);
-                System.out.println("Giveaway Price: "+Deals.deals_list.get(x).price);
+                System.out.println("Giveaway Price (NORMAL) : "+Deals.deals_list.get(x).price);
+                System.out.println("Giveaway Price (PRIME)  : "+Deals.deals_list.get(x).prime_price);
+                System.out.println("Giveaway Price (ELITE)  : "+Deals.deals_list.get(x).elite_price);
+
                 System.out.println("------------------------------------------------------------------");
                 System.out.println(" ");
             }
@@ -135,7 +137,14 @@ class Cart extends Deals{
         if (tempo <= Deals.deals_list.size()) {
             double temp1 = Deals.deals_list.get(tempo - 1).ID1;
             double temp2 = Deals.deals_list.get(tempo - 1).ID1;
-            double temp3 = Deals.deals_list.get(tempo - 1).price;
+            double temp3;
+            if(Customer.customer_list.get(Global.index).Status.equals("PRIME")){
+                temp3 = Deals.deals_list.get(tempo - 1).prime_price;
+            } else if (Customer.customer_list.get(Global.index).Status.equals("ELITE")) {
+                temp3 = Deals.deals_list.get(tempo - 1).elite_price;
+            }else {
+                temp3 = Deals.deals_list.get(tempo - 1).price;
+            }
             Cart.deals.add(Deals.deals_list.get(tempo - 1));
             Cart.Total_amount += temp3;
             System.out.println("Deal Products successfully added to Cart!!");
@@ -157,9 +166,12 @@ class Cart extends Deals{
 
             } else if (Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
                 for (int s = 0; s < Cart.deals.size(); s++) {
-                    System.out.println("ID of Ist Product: " + Cart.deals.get(s).ID1);
-                    System.out.println("ID of 2nd Product: " + Cart.deals.get(s).ID2);
-                    System.out.println("Giveaway price: " + Cart.deals.get(s).price);
+                    System.out.println("ID of Ist Product       : " + Cart.deals.get(s).ID1);
+                    System.out.println("ID of 2nd Product       : " + Cart.deals.get(s).ID2);
+                    System.out.println("Giveaway price (NORMAL) : " + Cart.deals.get(s).price+"/-");
+                    System.out.println("Giveaway price (PRIME)  : " + Cart.deals.get(s).prime_price+"/-");
+                    System.out.println("Giveaway price (ELITE)  : " + Cart.deals.get(s).elite_price+"/-");
+
                     System.out.println("----------------------------------------------");
                     System.out.println(" ");
                 }
@@ -182,9 +194,11 @@ class Cart extends Deals{
 
             } else {
                 for (int u = 0; u < Cart.deals.size(); u++) {
-                    System.out.println("ID of Ist Product: " + Cart.deals.get(u).ID1);
-                    System.out.println("ID of 2nd Product: " + Cart.deals.get(u).ID2);
-                    System.out.println("Giveaway price: " + Cart.deals.get(u).price+"/-");
+                    System.out.println("ID of Ist Product       : " + Cart.deals.get(u).ID1);
+                    System.out.println("ID of 2nd Product       : " + Cart.deals.get(u).ID2);
+                    System.out.println("Giveaway price (NORMAL) : " + Cart.deals.get(u).price+"/-");
+                    System.out.println("Giveaway price (PRIME)  : " + Cart.deals.get(u).prime_price+"/-");
+                    System.out.println("Giveaway price (ELITE)  : " + Cart.deals.get(u).elite_price+"/-");
                     System.out.println("----------------------------------------------");
                     System.out.println(" ");
                 }
@@ -210,9 +224,12 @@ class Cart extends Deals{
             Customer.Login_Menu();
         } else if (Cart.cart_list.isEmpty() && (!Cart.deals.isEmpty())) {
             for (int s = 0; s < Cart.deals.size(); s++) {
-                System.out.println("ID of Ist Product: " + Cart.deals.get(s).ID1);
-                System.out.println("ID of 2nd Product: " + Cart.deals.get(s).ID2);
-                System.out.println("Giveaway price: " + Cart.deals.get(s).price);
+                System.out.println("ID of Ist Product       : " + Cart.deals.get(s).ID1);
+                System.out.println("ID of 2nd Product       : " + Cart.deals.get(s).ID2);
+                System.out.println("Giveaway price (NORMAL) : " + Cart.deals.get(s).price+"/-");
+                System.out.println("Giveaway price (PRIME)  : " + Cart.deals.get(s).prime_price+"/-");
+                System.out.println("Giveaway price (ELITE)  : " + Cart.deals.get(s).elite_price+"/-");
+
                 System.out.println("----------------------------------------------");
                 System.out.println(" ");
             }
@@ -235,9 +252,12 @@ class Cart extends Deals{
             Customer.Login_Menu();
         } else {
             for (int u = 0; u < Cart.deals.size(); u++) {
-                System.out.println("ID of Ist Product: " + Cart.deals.get(u).ID1);
-                System.out.println("ID of 2nd Product: " + Cart.deals.get(u).ID2);
-                System.out.println("Giveaway price: " + Cart.deals.get(u).price+"/-");
+                System.out.println("ID of Ist Product       : " + Cart.deals.get(u).ID1);
+                System.out.println("ID of 2nd Product       : " + Cart.deals.get(u).ID2);
+                System.out.println("Giveaway price (NORMAL) : " + Cart.deals.get(u).price+"/-");
+                System.out.println("Giveaway price (PRIME)  : " + Cart.deals.get(u).prime_price+"/-");
+                System.out.println("Giveaway price (ELITE)  : " + Cart.deals.get(u).elite_price+"/-");
+
                 System.out.println("----------------------------------------------");
                 System.out.println(" ");
             }
@@ -359,7 +379,7 @@ class Cart extends Deals{
                         if (Cart.cart_list.get(x).ID == Administrator.list.get(f)) {
                             Cart.cart_list.get(x).disc = Administrator.elite_list.get(f);
                         } else {
-                            Cart.cart_list.get(x).disc = 5;
+                            Cart.cart_list.get(x).disc = 10;
                         }
                     }
                 }
@@ -398,7 +418,7 @@ class Cart extends Deals{
                 }
             }
             for(int f=0;f<Cart.deals.size();f++){
-                deals_price+=Cart.deals.get(f).price;
+                deals_price+=Cart.deals.get(f).prime_price;
             }
 
             Delivery_charge += ((Cart.Total_amount) / 100) * 2;
@@ -416,20 +436,20 @@ class Cart extends Deals{
                 double r=cart_price+Delivery_charge+ deals_price;
                 System.out.println("Total amount : "+r);
                 System.out.println("Your order will be placed in " + rand_temp + " days!!");
-                Cart.Empty_Cart(0);
-                Cart.Total_amount=0;
                 if(!Customer.disc_list.isEmpty()) {
                     Customer.disc_list.remove(0);
                 }
                 int rand_tem = (int) Math.floor(Math.random() * (2 - 1 + 1) + 1);
 
 
-                if(cart_price>5000) {
+                if(Cart.Total_amount>5000) {
                     for (int j = 0; j < rand_tem; j++) {
                         int count3 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
                         Customer.disc_list.add(count3);
                         System.out.println("Congratulations!! You got some coupons");
                     }
+                    Cart.Empty_Cart(0);
+                    Cart.Total_amount=0;
                     Customer.Login_Menu();
                 }else{
                     Customer.Login_Menu();
@@ -458,7 +478,7 @@ class Cart extends Deals{
                 }
             }
             for(int f=0;f<Cart.deals.size();f++){
-                deals_price+=Cart.deals.get(f).price;
+                deals_price+=Cart.deals.get(f).elite_price;
             }
             if ((cart_price + Delivery_charge+ deals_price) >= Customer.customer_list.get(Global.index).getWallet()) {
                 System.out.println("LOW Balance!!!");
@@ -476,15 +496,15 @@ class Cart extends Deals{
                     Customer.disc_list.remove(0);
                 }
                 System.out.println("Order placed!!!\nYour order will be delivered within 2 days.......");
-                Cart.Empty_Cart(0);
-                Cart.Total_amount=0;
                 int loop = (int) Math.floor(Math.random() * (3 - 4 + 1) + 4);
-                if (cart_price > 5000) {
+                if (Cart.Total_amount > 5000) {
                     for (int j = 0; j < loop; j++) {
                         int count4 = (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
                         Customer.disc_list.add(count4);
                         System.out.println("Congratulations!! You got some coupons");
                     }
+                    Cart.Empty_Cart(0);
+                    Cart.Total_amount=0;
                     Customer.Login_Menu();
                 }else{
                     Customer.Login_Menu();
